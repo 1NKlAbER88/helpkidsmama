@@ -1,62 +1,54 @@
 ---
 import { getCollection } from 'astro:content';
 import Base from '../layouts/Base.astro';
-import FeaturedArticle from '../components/FeaturedArticle.astro';
 import ArticleCard from '../components/ArticleCard.astro';
-import Subscribe from '../components/Subscribe.astro';
+import Channels from '../components/Channels.astro';
 
 const articles = (await getCollection('articles')).sort(
   (a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf()
 );
-const [featured, ...rest] = articles;
+const topics = ['Истерики', 'Телефоны и экраны', 'Школа и оценки', 'Границы', 'Сон', 'Мотивация', 'Эмоции', 'Ссоры', 'Уроки без слёз', 'Свободное время'];
 ---
-<Base title="Мамин Помощник — о детях 6–14 без нотаций">
-  <section class="hero">
-    <div class="wrap hero-grid">
-      <div class="reveal">
-        <span class="eyebrow">Спокойное родительство</span>
-        <h1>Меньше криков. Больше контакта.</h1>
-        <p class="lead">Короткие разборы про детей 6–14: что делать вместо запретов и нотаций — с примерами и нашими промахами.</p>
-        <div class="cta-row">
-          <a class="btn btn-primary" href={featured ? `/${featured.id}` : '#subscribe'}>Читать разборы</a>
-          <a class="btn btn-ghost" href="#subscribe">Подписаться</a>
-        </div>
+<Base title="Мамин Помощник — спокойное родительство без нотаций">
+  <section class="hero" id="top">
+    <div class="hero-bg"><img src="/images/brand/hero-dark.png" alt="" fetchpriority="high" /></div>
+    <div class="wrap content">
+      <span class="eyebrow">Спокойное родительство</span>
+      <h1>Меньше криков.<br><i>Больше контакта.</i></h1>
+      <p class="lead">Короткие разборы: что делать вместо запретов и нотаций — с примерами и нашими промахами.</p>
+      <div class="cta-row">
+        <a class="btn btn-primary" href="#articles">Читать разборы</a>
+        <a class="btn btn-ghost" href="#channels">Наши каналы</a>
       </div>
-      <div class="hero-photo reveal d1">
-        <img src="/images/brand/hero.png" alt="Мама и ребёнок читают вместе на диване" fetchpriority="high" />
-      </div>
+    </div>
+    <a class="scroll-hint" href="#articles">листай вниз ↓</a>
+  </section>
+
+  <div class="marquee" aria-hidden="true">
+    <div class="marquee-track">
+      {[...topics, ...topics].map((t) => <span>{t}</span>)}
+    </div>
+  </div>
+
+  <section class="section wrap" id="articles">
+    <div class="section-head reveal">
+      <h2>Разборы</h2>
+      <p class="sub">Читаются за пять минут, применяются уже сегодня.</p>
+    </div>
+    <div class="grid">
+      {articles.map((a, i) => (
+        <ArticleCard
+          href={`/${a.id}`}
+          title={a.data.title}
+          description={a.data.description}
+          cover={a.data.cover}
+          date={a.data.pubDate}
+          body={a.body}
+          idx={i}
+        />
+      ))}
     </div>
   </section>
 
-  <section class="section wrap">
-    <div class="section-head"><h2>Свежие разборы</h2></div>
-    {featured && (
-      <FeaturedArticle
-        href={`/${featured.id}`}
-        title={featured.data.title}
-        description={featured.data.description}
-        cover={featured.data.cover}
-        date={featured.data.pubDate}
-        body={featured.body}
-      />
-    )}
-    {rest.length > 0 && (
-      <div class="grid" style="margin-top: 32px;">
-        {rest.map((a) => (
-          <ArticleCard
-            href={`/${a.id}`}
-            title={a.data.title}
-            description={a.data.description}
-            cover={a.data.cover}
-            date={a.data.pubDate}
-            body={a.body}
-          />
-        ))}
-      </div>
-    )}
-  </section>
-
-  <section class="section wrap">
-    <Subscribe />
-  </section>
+  <Channels />
 </Base>

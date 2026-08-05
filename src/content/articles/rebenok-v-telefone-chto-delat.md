@@ -84,4 +84,4 @@ tags: ["воспитание", "гаджеты", "экранное время", 
 
 ---
 
-Если было по делу — оставайтесь: пишу о детях 6–14 без нотаций, короткими разборами, которые можно применить уже сегодня. Больше таких разговоров — в наших каналах [Telegram](https://t.me/ledi40vse) и [MAX](https://max.ru/channel_Test222).
+Если было по делу — оставайтесь: короткие разборы без нотаций, которые можно применить уже сегодня. Больше — в наших каналах: [Telegram](https://t.me/help_kids_mama), [MAX](https://max.ru/channel_help_kids_mama), [Дзен](https://dzen.ru/mamahelp) и [Pinterest](https://pinterest.com/MaminHelp/).

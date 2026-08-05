@@ -1,0 +1,14 @@
+---
+import { SOCIALS, ICONS } from '../lib/socials';
+interface Props { variant?: 'nav' | 'footer'; }
+const { variant = 'nav' } = Astro.props;
+const wrapCls = variant === 'footer' ? 'fsoc' : 'socials';
+---
+<div class={wrapCls}>
+  {SOCIALS.map((s) => (
+    <a class={`social-link ${s.cls}`} href={s.href} target="_blank" rel="noopener" aria-label={s.name}>
+      <span class="ic" set:html={ICONS[s.cls]} />
+      <span>{s.name}</span>
+    </a>
+  ))}
+</div>

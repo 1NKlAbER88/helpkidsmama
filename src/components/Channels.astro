@@ -1,0 +1,22 @@
+---
+import { SOCIALS, ICONS } from '../lib/socials';
+---
+<section class="channels" id="channels">
+  <div class="wrap section">
+    <div class="inner reveal">
+      <span class="eyebrow">Давай на связи</span>
+      <h2>Продолжение — в наших каналах</h2>
+      <p class="sub">Разборы, чек-листы, короткие приёмы и живое общение каждый день. Заходи, где тебе удобнее — и оставайся.</p>
+    </div>
+    <div class="channel-grid">
+      {SOCIALS.map((s, i) => (
+        <a class={`channel ${s.cls} reveal d${(i % 3) + 1}`} href={s.href} target="_blank" rel="noopener">
+          <span class="ic" set:html={ICONS[s.cls]} />
+          <span class="name">{s.name}</span>
+          <span class="h">{s.handle}</span>
+          <span class="go">Перейти →</span>
+        </a>
+      ))}
+    </div>
+  </div>
+</section>
