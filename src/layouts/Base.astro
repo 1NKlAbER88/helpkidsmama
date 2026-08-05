@@ -1,0 +1,60 @@
+---
+import '../styles/global.css';
+export interface Props {
+  title: string;
+  description?: string;
+  image?: string;
+  article?: boolean;
+}
+const { title, description = 'Спокойное родительство без нотаций: короткие разборы про детей 6–14, которые можно применить уже сегодня.', image, article = false } = Astro.props;
+const canonical = new URL(Astro.url.pathname, Astro.site).href;
+const ogImage = image ? new URL(image, Astro.site).href : new URL('/images/rebenok-v-telefone-chto-delat/cover.png', Astro.site).href;
+const siteName = 'Мамин Помощник';
+---
+<!doctype html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+  <title>{title}</title>
+  <meta name="description" content={description} />
+  <link rel="canonical" href={canonical} />
+  <meta property="og:type" content={article ? 'article' : 'website'} />
+  <meta property="og:site_name" content={siteName} />
+  <meta property="og:title" content={title} />
+  <meta property="og:description" content={description} />
+  <meta property="og:url" content={canonical} />
+  <meta property="og:image" content={ogImage} />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content={title} />
+  <meta name="twitter:description" content={description} />
+  <meta name="twitter:image" content={ogImage} />
+</head>
+<body>
+  <header class="site-header">
+    <div class="wrap">
+      <a class="brand" href="/"><img src="/favicon.svg" alt="" />Мамин Помощник</a>
+      <nav class="nav">
+        <a href="/">Статьи</a>
+        <a href="https://t.me/ledi40vse" target="_blank" rel="noopener">Telegram</a>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+    <slot />
+  </main>
+
+  <footer class="site-footer">
+    <div class="wrap">
+      <div>© {new Date().getFullYear()} Мамин Помощник · о детях 6–14 без нотаций</div>
+      <div class="chan">
+        Мы в мессенджерах:
+        <a href="https://t.me/ledi40vse" target="_blank" rel="noopener">Telegram</a>
+        <a href="https://max.ru/channel_Test222" target="_blank" rel="noopener">MAX</a>
+      </div>
+    </div>
+  </footer>
+</body>
+</html>

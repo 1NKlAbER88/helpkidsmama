@@ -1,0 +1,30 @@
+---
+import { getCollection, render } from 'astro:content';
+import Base from '../layouts/Base.astro';
+import Subscribe from '../components/Subscribe.astro';
+
+export async function getStaticPaths() {
+  const articles = await getCollection('articles');
+  return articles.map((entry) => ({ params: { slug: entry.id }, props: { entry } }));
+}
+
+const { entry } = Astro.props;
+const { Content } = await render(entry);
+const d = entry.data.pubDate.toLocaleDateString('ru-RU', { day: 'numeric', month: 'long', year: 'numeric' });
+---
+<Base title={entry.data.title} description={entry.data.description} image={entry.data.cover} article={true}>
+  <article class="article">
+    <div class="article-hero">
+      <div class="kicker">Мамин Помощник</div>
+      <h1>{entry.data.title}</h1>
+      <div class="meta">{d}</div>
+    </div>
+    {entry.data.cover && (
+      <div class="article-cover"><img src={entry.data.cover} alt={entry.data.title} /></div>
+    )}
+    <div class="prose">
+      <Content />
+      <Subscribe />
+    </div>
+  </article>
+</Base>

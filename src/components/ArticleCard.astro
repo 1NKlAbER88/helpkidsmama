@@ -1,0 +1,19 @@
+---
+export interface Props {
+  href: string;
+  title: string;
+  description: string;
+  cover?: string;
+  date: Date;
+}
+const { href, title, description, cover, date } = Astro.props;
+const d = date.toLocaleDateString('ru-RU', { day: 'numeric', month: 'long', year: 'numeric' });
+---
+<a class="card" href={href}>
+  {cover && <div class="thumb"><img src={cover} alt="" loading="lazy" /></div>}
+  <div class="body">
+    <h2>{title}</h2>
+    <p>{description}</p>
+    <div class="date">{d}</div>
+  </div>
+</a>
