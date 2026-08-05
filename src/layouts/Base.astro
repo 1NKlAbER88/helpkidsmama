@@ -1,14 +1,24 @@
 ---
+import '@fontsource/playfair-display/500.css';
+import '@fontsource/playfair-display/600.css';
+import '@fontsource/playfair-display/700.css';
+import '@fontsource-variable/onest';
 import '../styles/global.css';
+
 export interface Props {
   title: string;
   description?: string;
   image?: string;
   article?: boolean;
 }
-const { title, description = 'Спокойное родительство без нотаций: короткие разборы про детей 6–14, которые можно применить уже сегодня.', image, article = false } = Astro.props;
+const {
+  title,
+  description = 'Спокойное родительство без нотаций: короткие разборы про детей 6–14, которые можно применить уже сегодня.',
+  image,
+  article = false,
+} = Astro.props;
 const canonical = new URL(Astro.url.pathname, Astro.site).href;
-const ogImage = image ? new URL(image, Astro.site).href : new URL('/images/rebenok-v-telefone-chto-delat/cover.png', Astro.site).href;
+const ogImage = new URL(image || '/images/brand/hero.png', Astro.site).href;
 const siteName = 'Мамин Помощник';
 ---
 <!doctype html>
@@ -33,11 +43,14 @@ const siteName = 'Мамин Помощник';
 </head>
 <body>
   <header class="site-header">
-    <div class="wrap">
+    <div class="wrap bar">
       <a class="brand" href="/"><img src="/favicon.svg" alt="" />Мамин Помощник</a>
       <nav class="nav">
-        <a href="/">Статьи</a>
-        <a href="https://t.me/ledi40vse" target="_blank" rel="noopener">Telegram</a>
+        <span class="nav-links">
+          <a href="/">Статьи</a>
+          <a href="https://t.me/ledi40vse" target="_blank" rel="noopener">Telegram</a>
+        </span>
+        <a class="btn btn-primary" href="#subscribe">Подписаться</a>
       </nav>
     </div>
   </header>
@@ -47,14 +60,18 @@ const siteName = 'Мамин Помощник';
   </main>
 
   <footer class="site-footer">
-    <div class="wrap">
-      <div>© {new Date().getFullYear()} Мамин Помощник · о детях 6–14 без нотаций</div>
-      <div class="chan">
-        Мы в мессенджерах:
+    <div class="wrap cols">
+      <div>
+        <a class="brand" href="/"><img src="/favicon.svg" alt="" />Мамин Помощник</a>
+        <p>О детях 6–14 без нотаций. Разбираем, что делать вместо криков и запретов.</p>
+      </div>
+      <div class="fnav">
+        <a href="/">Все статьи</a>
         <a href="https://t.me/ledi40vse" target="_blank" rel="noopener">Telegram</a>
         <a href="https://max.ru/channel_Test222" target="_blank" rel="noopener">MAX</a>
       </div>
     </div>
+    <div class="wrap copy">© {new Date().getFullYear()} Мамин Помощник · helpkidsmama.ru</div>
   </footer>
 </body>
 </html>

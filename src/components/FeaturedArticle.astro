@@ -11,11 +11,12 @@ export interface Props {
 const { href, title, description, cover, date, body = '' } = Astro.props;
 const rt = readingTime(body);
 ---
-<a class="card" href={href}>
-  {cover && <div class="thumb"><img src={cover} alt="" loading="lazy" /></div>}
-  <div class="c-body">
+<a class="featured" href={href}>
+  {cover && <div class="f-media"><img src={cover} alt={title} /></div>}
+  <div class="f-body">
     <h3>{title}</h3>
     <p>{description}</p>
-    <div class="meta"><span>{formatDate(date)}</span><span class="dot"></span><span>{rt} мин</span></div>
+    <div class="meta"><span>{formatDate(date)}</span><span class="dot"></span><span>{rt} мин чтения</span></div>
+    <span class="btn btn-ghost">Читать разбор →</span>
   </div>
 </a>

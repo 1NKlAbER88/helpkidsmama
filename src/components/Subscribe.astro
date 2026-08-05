@@ -1,13 +1,15 @@
 ---
 ---
-<section class="subscribe">
+<section class="subscribe reveal" id="subscribe">
+  <span class="eyebrow">Рассылка</span>
   <h3>Разборы без нотаций — раз в неделю</h3>
-  <p>Оставьте почту — пришлём лучшие статьи и чек-листы. Без спама, отписаться можно в один клик.</p>
-  <form id="subForm">
-    <input type="email" name="email" placeholder="ваша почта" required />
-    <button type="submit">Подписаться</button>
+  <p>Лучшие статьи и чек-листы на почту. Без спама, отписаться можно в один клик.</p>
+  <form id="subForm" method="post" action="#">
+    <input type="email" name="email" placeholder="ваша почта" required autocomplete="email" />
+    <button type="submit" class="btn btn-primary">Подписаться</button>
   </form>
-  <div class="ok" id="subOk" hidden>Спасибо! Рассылку скоро подключим 🤍</div>
+  <p class="note" id="subNote">Пока присылаем вручную. Скоро подключим автоматическую рассылку.</p>
+  <div class="ok" id="subOk" hidden>Спасибо! Мы на связи 🤍</div>
 </section>
 <script is:inline>
   const f = document.getElementById('subForm');
@@ -15,6 +17,8 @@
     f.addEventListener('submit', (e) => {
       e.preventDefault();
       f.setAttribute('hidden', '');
+      const note = document.getElementById('subNote');
+      if (note) note.setAttribute('hidden', '');
       document.getElementById('subOk').removeAttribute('hidden');
     });
   }

@@ -2,6 +2,7 @@
 import { getCollection, render } from 'astro:content';
 import Base from '../layouts/Base.astro';
 import Subscribe from '../components/Subscribe.astro';
+import { readingTime, formatDate } from '../lib/reading';
 
 export async function getStaticPaths() {
   const articles = await getCollection('articles');
@@ -10,20 +11,31 @@ export async function getStaticPaths() {
 
 const { entry } = Astro.props;
 const { Content } = await render(entry);
-const d = entry.data.pubDate.toLocaleDateString('ru-RU', { day: 'numeric', month: 'long', year: 'numeric' });
+const rt = readingTime(entry.body);
 ---
 <Base title={entry.data.title} description={entry.data.description} image={entry.data.cover} article={true}>
-  <article class="article">
-    <div class="article-hero">
-      <div class="kicker">Мамин Помощник</div>
+  <article>
+    <div class="article-head wrap">
+      <div class="k">Мамин Помощник</div>
       <h1>{entry.data.title}</h1>
-      <div class="meta">{d}</div>
+      <div class="meta">
+        <span>{formatDate(entry.data.pubDate)}</span>
+        <span class="dot"></span>
+        <span>{rt} мин чтения</span>
+      </div>
     </div>
+
     {entry.data.cover && (
-      <div class="article-cover"><img src={entry.data.cover} alt={entry.data.title} /></div>
+      <div class="article-cover reveal">
+        <img src={entry.data.cover} alt={entry.data.title} fetchpriority="high" />
+      </div>
     )}
+
     <div class="prose">
       <Content />
+    </div>
+
+    <div class="wrap section">
       <Subscribe />
     </div>
   </article>
