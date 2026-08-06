@@ -144,13 +144,12 @@ p { margin: 0 0 1.1em; }
 .site-footer .fsoc { display: flex; gap: 8px; flex-wrap: wrap; }
 .site-footer .copy { border-top: 1px solid var(--line); color: var(--faint); font-size: 13px; padding: 18px 0; }
 
-/* reveal (JS-gated so no-JS shows content) */
-.reveal { transition: opacity .8s var(--ease), transform .8s var(--ease); }
-.js .reveal { opacity: 0; transform: translateY(26px); }
-.js .reveal.in { opacity: 1; transform: none; }
-.reveal.d1 { transition-delay: .1s; } .reveal.d2 { transition-delay: .2s; } .reveal.d3 { transition-delay: .3s; }
+/* reveal — чистый CSS, контент ВСЕГДА виден (анимация только украшает на загрузке) */
+@keyframes fadeUp { from { opacity: 0; transform: translateY(22px); } to { opacity: 1; transform: none; } }
+.reveal { animation: fadeUp .7s var(--ease) both; }
+.reveal.d1 { animation-delay: .08s; } .reveal.d2 { animation-delay: .16s; } .reveal.d3 { animation-delay: .24s; }
 @media (prefers-reduced-motion: reduce) {
-  .js .reveal { opacity: 1; transform: none; }
+  .reveal { animation: none; }
   .marquee-track, .hero .hero-bg img { animation: none; }
   html { scroll-behavior: auto; }
 }
