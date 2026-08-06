@@ -19,7 +19,7 @@ const {
   article = false,
 } = Astro.props;
 const canonical = new URL(Astro.url.pathname, Astro.site).href;
-const ogImage = new URL(image || '/images/brand/hero-dark.png', Astro.site).href;
+const ogImage = new URL(image || '/images/brand/hero.png', Astro.site).href;
 const siteName = 'Мамин Помощник';
 ---
 <!doctype html>
@@ -28,7 +28,7 @@ const siteName = 'Мамин Помощник';
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-  <meta name="theme-color" content="#100d0b" />
+  <meta name="theme-color" content="#f6f1e8" />
   <title>{title}</title>
   <meta name="description" content={description} />
   <link rel="canonical" href={canonical} />
@@ -43,9 +43,7 @@ const siteName = 'Мамин Помощник';
   <meta name="twitter:description" content={description} />
   <meta name="twitter:image" content={ogImage} />
 </head>
-<body>
-  <div class="grain"></div>
-
+<body class="js">
   <header class="nav" id="nav">
     <div class="wrap bar">
       <a class="brand" href="/"><img src="/images/brand/logo-mark.png" alt="" />Мамин Помощник</a>
