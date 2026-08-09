@@ -1,53 +1,50 @@
 ---
 import { getCollection } from 'astro:content';
 import Base from '../layouts/Base.astro';
-import ArticleCard from '../components/ArticleCard.astro';
-import Channels from '../components/Channels.astro';
+import { readingTime, formatDate } from '../lib/reading';
 
 const articles = (await getCollection('articles')).sort(
   (a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf()
 );
-const topics = ['Истерики', 'Телефоны и экраны', 'Школа и оценки', 'Границы', 'Сон', 'Мотивация', 'Эмоции', 'Ссоры', 'Уроки без слёз', 'Свободное время'];
 ---
-<Base title="Мамин Помощник — спокойное родительство без нотаций">
-  <section class="hero" id="top">
-    <div class="hero-bg"><img src="/images/brand/hero.png" alt="Мама и ребёнок читают книгу вместе" fetchpriority="high" /></div>
-    <div class="content">
-      <span class="eyebrow">Спокойное воспитание детей</span>
-      <h1>Меньше криков.<br><i>Больше контакта.</i></h1>
-      <p class="lead">Короткие разборы про детей: что делать вместо запретов и криков — с примерами и нашими промахами.</p>
-      <div class="cta-row">
-        <a class="btn btn-primary" href="#articles">Читать разборы</a>
-        <a class="btn btn-ghost" href="#channels">Наши каналы</a>
+<Base title="Мамин Помощник — спокойное воспитание детей">
+  <header class="hero">
+    <div class="bg"><img src="/images/brand/hero.webp" alt="Мама и ребёнок вместе" fetchpriority="high" /></div>
+    <div class="waves">
+      <svg viewBox="0 0 1200 46" preserveAspectRatio="none"><path fill="#faf0f2" d="M0,12 C100,30 250,2 400,16 C550,32 700,4 850,18 C1000,32 1100,8 1200,14 L1200,46 L0,46 Z"/></svg>
+      <svg viewBox="0 0 1200 46" preserveAspectRatio="none"><path fill="rgba(245,192,204,.5)" d="M0,16 C180,32 360,4 540,18 C720,32 900,6 1200,16 L1200,46 L0,46 Z"/></svg>
+    </div>
+    <div class="center">
+      <div class="hand">как есть, без идеальной картинки</div>
+      <h1>Спокойнее дома.<br><i>Ближе к детям.</i></h1>
+      <p class="desc">Короткие разборы про детей: что делать вместо криков и запретов — с примерами и нашими промахами.</p>
+      <div class="cta-wrap">
+        <a class="btn-ios" href="#list"><svg viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6"/></svg>Смотреть разборы</a>
       </div>
+      <p class="platforms-hint">Короткие приёмы — в Telegram и MAX, большие разборы — на Дзене, идеи и карточки — на Pinterest</p>
     </div>
-  </section>
+  </header>
 
-  <div class="marquee" aria-hidden="true">
-    <div class="marquee-track">
-      {[...topics, ...topics].map((t) => <span>{t}</span>)}
-    </div>
-  </div>
-
-  <section class="section wrap" id="articles">
-    <div class="section-head reveal">
-      <h2>Разборы</h2>
-      <p class="sub">Читаются за пять минут, применяются уже сегодня.</p>
+  <section class="articles wrap" id="list">
+    <div class="head reveal">
+      <h2>Свежие разборы</h2>
+      <p>Читаются за пять минут, применяются уже сегодня.</p>
     </div>
     <div class="grid">
       {articles.map((a, i) => (
-        <ArticleCard
-          href={`/${a.id}`}
-          title={a.data.title}
-          description={a.data.description}
-          cover={a.data.cover}
-          date={a.data.pubDate}
-          body={a.body}
-          idx={i}
-        />
+        <a class={`item reveal ${['', 'd1', 'd2'][i % 3]}`} href={`/${a.id}`}>
+          {a.data.cover && <div class="thumb"><img src={a.data.cover} alt="" loading="lazy" /></div>}
+          <div class="b">
+            <h3>{a.data.title}</h3>
+            <p>{a.data.description}</p>
+            <div class="meta">
+              <span>{formatDate(a.data.pubDate)}</span><span class="dot"></span>
+              <span>{readingTime(a.body)} мин</span><span class="dot"></span>
+              <span class="more">Читать →</span>
+            </div>
+          </div>
+        </a>
       ))}
     </div>
   </section>
-
-  <Channels />
 </Base>

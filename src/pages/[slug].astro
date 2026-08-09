@@ -1,7 +1,7 @@
 ---
 import { getCollection, render } from 'astro:content';
 import Base from '../layouts/Base.astro';
-import Channels from '../components/Channels.astro';
+import Offer from '../components/Offer.astro';
 import { readingTime, formatDate } from '../lib/reading';
 
 export async function getStaticPaths() {
@@ -14,27 +14,19 @@ const { Content } = await render(entry);
 const rt = readingTime(entry.body);
 ---
 <Base title={entry.data.title} description={entry.data.description} image={entry.data.cover} article={true}>
-  <article>
-    <div class="article-head wrap">
-      <span class="eyebrow">Разбор</span>
-      <h1>{entry.data.title}</h1>
-      <div class="meta">
-        <span>{formatDate(entry.data.pubDate)}</span>
-        <span class="dot"></span>
-        <span>{rt} мин чтения</span>
-      </div>
+  <article class="article">
+    <div class="a-meta">
+      <span>Разбор</span><span class="dot"></span>
+      <span>{formatDate(entry.data.pubDate)}</span><span class="dot"></span>
+      <span>{rt} мин</span>
     </div>
-
+    <h1>{entry.data.title}</h1>
     {entry.data.cover && (
-      <div class="article-cover wrap reveal">
-        <img src={entry.data.cover} alt={entry.data.title} fetchpriority="high" />
-      </div>
+      <div class="cover reveal"><img src={entry.data.cover} alt={entry.data.title} fetchpriority="high" /></div>
     )}
-
     <div class="prose">
       <Content />
     </div>
-
-    <Channels />
   </article>
+  <Offer />
 </Base>

@@ -1,10 +1,10 @@
 ---
-import '@fontsource/playfair-display/500.css';
 import '@fontsource/playfair-display/600.css';
 import '@fontsource/playfair-display/700.css';
+import '@fontsource/playfair-display/600-italic.css';
 import '@fontsource-variable/onest';
 import '../styles/global.css';
-import Social from '../components/Social.astro';
+import { SOCIALS, ICONS } from '../lib/socials';
 
 export interface Props {
   title: string;
@@ -14,12 +14,12 @@ export interface Props {
 }
 const {
   title,
-  description = 'Спокойное родительство без нотаций: короткие разборы, что делать вместо криков и запретов — с примерами.',
+  description = 'Спокойное воспитание детей без криков и нотаций: короткие разборы, что делать вместо запретов — с примерами.',
   image,
   article = false,
 } = Astro.props;
 const canonical = new URL(Astro.url.pathname, Astro.site).href;
-const ogImage = new URL(image || '/images/brand/hero.png', Astro.site).href;
+const ogImage = new URL(image || '/images/brand/hero.webp', Astro.site).href;
 const siteName = 'Мамин Помощник';
 ---
 <!doctype html>
@@ -28,7 +28,7 @@ const siteName = 'Мамин Помощник';
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-  <meta name="theme-color" content="#f6f1e8" />
+  <meta name="theme-color" content="#2d1a20" />
   <title>{title}</title>
   <meta name="description" content={description} />
   <link rel="canonical" href={canonical} />
@@ -43,52 +43,59 @@ const siteName = 'Мамин Помощник';
   <meta name="twitter:description" content={description} />
   <meta name="twitter:image" content={ogImage} />
 </head>
-<body class="js">
-  <header class="nav" id="nav">
-    <div class="wrap bar">
-      <a class="brand" href="/"><img src="/images/brand/logo-mark.png" alt="" />Мамин Помощник</a>
-      <div class="nav-right">
-        <Social variant="nav" />
-        <a class="btn btn-primary" href="https://t.me/help_kids_mama" target="_blank" rel="noopener">В Telegram</a>
-      </div>
+<body>
+  <header class={`nav${article ? ' solid' : ''}`} id="nav">
+    <div class="bar">
+      <a class="brand" href="/"><img src="/images/brand/logo-mark.webp" alt="" width="34" height="34" />Мамин <span>Помощник</span></a>
+      <nav class="socials">
+        {SOCIALS.map((s) => (
+          <a class={`soc ${s.cls}`} href={s.href} target="_blank" rel="noopener" aria-label={s.name}>
+            <span set:html={ICONS[s.cls]} />{s.name}
+          </a>
+        ))}
+      </nav>
     </div>
   </header>
+  {article && <div class="progress"><div class="progress-fill" id="pf"></div></div>}
 
   <main>
     <slot />
   </main>
 
   <footer class="site-footer">
-    <div class="wrap cols">
-      <div>
-        <a class="brand" href="/"><img src="/images/brand/logo-mark.png" alt="" />Мамин Помощник</a>
-        <p>Спокойное родительство без нотаций. Что делать вместо криков и запретов — с примерами и промахами.</p>
-      </div>
-      <div>
-        <Social variant="footer" />
-      </div>
+    <div class="ft-brand">
+      <img src="/images/brand/logo-mark.webp" alt="" width="30" height="30" />
+      <span class="ft-name">Мамин <span>Помощник</span></span>
     </div>
-    <div class="wrap copy">© <span id="yr"></span> Мамин Помощник · helpkidsmama.ru</div>
+    <p class="ft-desc">Спокойное родительство без нотаций. Что делать вместо криков и запретов — с примерами и нашими промахами.</p>
+    <div class="ft-links">
+      {SOCIALS.map((s) => <a href={s.href} target="_blank" rel="noopener">{s.name}</a>)}
+    </div>
+    <p class="ft-copy">© <span id="yr"></span> Мамин Помощник · helpkidsmama.ru</p>
   </footer>
 
   <script is:inline>
-    const nav = document.getElementById('nav');
-    const onScroll = () => {
-      if (window.scrollY > 40) nav.classList.add('solid');
-      else nav.classList.remove('solid');
-    };
-    onScroll();
-    window.addEventListener('scroll', onScroll, { passive: true });
-
-    const io = new IntersectionObserver((entries) => {
-      entries.forEach((e) => {
-        if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); }
-      });
-    }, { threshold: 0.14 });
-    document.querySelectorAll('.reveal').forEach((el) => io.observe(el));
-
-    const yr = document.getElementById('yr');
-    if (yr) yr.textContent = new Date().getFullYear();
+    (function () {
+      var nav = document.getElementById('nav');
+      if (nav && !nav.classList.contains('solid')) {
+        var os = function () { if (window.scrollY > 40) nav.classList.add('solid'); else nav.classList.remove('solid'); };
+        os();
+        window.addEventListener('scroll', os, { passive: true });
+      }
+      var pf = document.getElementById('pf');
+      if (pf) {
+        var upd = function () {
+          var h = document.documentElement;
+          var m = h.scrollHeight - h.clientHeight;
+          pf.style.width = (m > 0 ? (h.scrollTop / m * 100) : 0) + '%';
+        };
+        upd();
+        window.addEventListener('scroll', upd, { passive: true });
+        window.addEventListener('resize', upd);
+      }
+      var y = document.getElementById('yr');
+      if (y) y.textContent = new Date().getFullYear();
+    })();
   </script>
 </body>
 </html>
