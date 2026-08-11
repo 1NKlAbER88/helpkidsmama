@@ -5,6 +5,7 @@ import { OFFER } from '../lib/site';
   <div class="card">
     <p class="offer-lead">{OFFER.lead}</p>
     <p class="offer-text">{OFFER.text}</p>
-    <a class="btn-glass" href={OFFER.href}>{OFFER.cta}</a>
+    <a class="btn-glass" href={OFFER.href} target="_blank" rel="noopener sponsored nofollow">{OFFER.cta}</a>
+    <p class="offer-ad">{OFFER.disclosure}</p>
   </div>
 </section>
