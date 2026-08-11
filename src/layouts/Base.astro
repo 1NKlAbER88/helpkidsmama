@@ -21,8 +21,8 @@ const {
 const canonical = new URL(Astro.url.pathname, Astro.site).href;
 const ogImage = new URL(image || '/images/brand/hero.webp', Astro.site).href;
 const siteName = 'Мамин Помощник';
-// Яндекс.Метрика: ID берётся из env PUBLIC_METRIKA_ID (задать при деплое). Пусто — счётчик не рендерится.
-const metrikaId = import.meta.env.PUBLIC_METRIKA_ID || '';
+// Google Analytics 4: ID из env PUBLIC_GA4_ID (напр. G-XXXXXXX), задать при сборке. Пусто — не рендерится.
+const ga4Id = import.meta.env.PUBLIC_GA4_ID || '';
 ---
 <!doctype html>
 <html lang="ru">
@@ -44,10 +44,10 @@ const metrikaId = import.meta.env.PUBLIC_METRIKA_ID || '';
   <meta name="twitter:title" content={title} />
   <meta name="twitter:description" content={description} />
   <meta name="twitter:image" content={ogImage} />
-  {metrikaId && (
+  {ga4Id && (
     <Fragment>
-      <script is:inline set:html={`(function(m,e,t,r,i,k,a){m[i]=m[i]||function(){(m[i].a=m[i].a||[]).push(arguments)};m[i].l=1*new Date();for(var j=0;j<document.scripts.length;j++){if(document.scripts[j].src===r){return;}}k=e.createElement(t),a=e.getElementsByTagName(t)[0],k.async=1,k.src=r,a.parentNode.insertBefore(k,a)})(window,document,"script","https://mc.yandex.ru/metrika/tag.js","ym");ym(${metrikaId}, "init", {clickmap:true,trackLinks:true,accurateTrackBounce:true});`} />
-      <noscript><div><img src={`https://mc.yandex.ru/watch/${metrikaId}`} style="position:absolute;left:-9999px" alt="" /></div></noscript>
+      <script is:inline async src={`https://www.googletagmanager.com/gtag/js?id=${ga4Id}`}></script>
+      <script is:inline set:html={`window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','${ga4Id}');`} />
     </Fragment>
   )}
 </head>
