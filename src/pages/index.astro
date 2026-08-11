@@ -3,9 +3,11 @@ import { getCollection } from 'astro:content';
 import Base from '../layouts/Base.astro';
 import { readingTime, formatDate } from '../lib/reading';
 
-const articles = (await getCollection('articles')).sort(
-  (a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf()
-);
+// Драфт-модель: статьи с датой в будущем скрыты до своего дня (проявляются при ежедневном редеплое).
+const now = Date.now();
+const articles = (await getCollection('articles'))
+  .filter((a) => a.data.pubDate.valueOf() <= now)
+  .sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf());
 ---
 <Base title="Мамин Помощник — спокойное воспитание детей">
   <header class="hero">
