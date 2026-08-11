@@ -22,7 +22,7 @@ const canonical = new URL(Astro.url.pathname, Astro.site).href;
 const ogImage = new URL(image || '/images/brand/hero.webp', Astro.site).href;
 const siteName = 'Мамин Помощник';
 // Google Analytics 4: ID из env PUBLIC_GA4_ID (напр. G-XXXXXXX), задать при сборке. Пусто — не рендерится.
-const ga4Id = import.meta.env.PUBLIC_GA4_ID || '';
+const ga4Id = import.meta.env.PUBLIC_GA4_ID || 'G-GBDJ0THHWX';
 ---
 <!doctype html>
 <html lang="ru">
