@@ -7,3 +7,9 @@ export const OFFER = {
   // Обязательная маркировка рекламы (закон РФ) — печатается маленьким текстом под кнопкой.
   disclosure: 'Реклама. ООО Юкидс, ИНН: 7707454940, erid=2bL9aMPo2e4BA5qnNJQJiJgktM.',
 };
+
+// Коды верификации поисковиков (вставить content-строку из Google Search Console / Яндекс.Вебмастера).
+export const VERIFICATION = {
+  google: '',
+  yandex: '',
+};

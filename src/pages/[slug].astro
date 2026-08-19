@@ -16,7 +16,13 @@ const { entry } = Astro.props;
 const { Content } = await render(entry);
 const rt = readingTime(entry.body);
 ---
-<Base title={entry.data.title} description={entry.data.description} image={entry.data.cover} article={true}>
+<Base
+  title={entry.data.title}
+  description={entry.data.description}
+  image={entry.data.cover}
+  article={true}
+  datePublished={entry.data.pubDate}
+>
   <article class="article">
     <div class="a-meta">
       <span>Разбор</span><span class="dot"></span>
