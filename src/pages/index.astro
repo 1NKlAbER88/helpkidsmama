@@ -1,7 +1,6 @@
 ---
 import { getCollection } from 'astro:content';
 import Base from '../layouts/Base.astro';
-import TgCta from '../components/TgCta.astro';
 import { readingTime, formatDate } from '../lib/reading';
 
 // Драфт-модель: статьи с датой в будущем скрыты до своего дня (проявляются при ежедневном редеплое).
@@ -49,6 +48,5 @@ const articles = (await getCollection('articles'))
         </a>
       ))}
     </div>
-    <TgCta />
   </section>
 </Base>
