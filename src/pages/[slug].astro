@@ -2,7 +2,6 @@
 import { getCollection, render } from 'astro:content';
 import Base from '../layouts/Base.astro';
 import Offer from '../components/Offer.astro';
-import TgCta from '../components/TgCta.astro';
 import { readingTime, formatDate } from '../lib/reading';
 
 export async function getStaticPaths() {
@@ -38,6 +37,5 @@ const rt = readingTime(entry.body);
       <Content />
     </div>
   </article>
-  <TgCta />
   <Offer />
 </Base>
