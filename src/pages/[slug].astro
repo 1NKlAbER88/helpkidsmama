@@ -2,6 +2,7 @@
 import { getCollection, render } from 'astro:content';
 import Base from '../layouts/Base.astro';
 import Offer from '../components/Offer.astro';
+import Reviews from '../components/Reviews.astro';
 import { readingTime, formatDate } from '../lib/reading';
 
 export async function getStaticPaths() {
@@ -38,4 +39,5 @@ const rt = readingTime(entry.body);
     </div>
   </article>
   <Offer />
+  <Reviews slug={entry.id} />
 </Base>
