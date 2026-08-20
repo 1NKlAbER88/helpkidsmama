@@ -4,8 +4,8 @@ export const OFFER = {
   head2: 'Начните с диагностики',
   text: 'За 45 минут педагог оценит ключевые гибкие навыки ребёнка, а вы получите диагностическую карту и рекомендации, что можно улучшить дома',
   cta: 'Подробнее',
-  href: 'https://kursy-tut.ru/2767346?erid=2bL9aMPo2e4BASqrNUQJJgktM',
-  disclosure: 'Реклама. ООО Юкидс, ИНН: 7707454940, erid=2bL9aMPo2e4BASqrNUQJJgktM.',
+  href: 'https://bestvebinar.ru/2769600?erid=2bL9aMPo2e4BA5qnNJQJiMfjb5',
+  disclosure: 'Реклама. ООО Юкидс, ИНН: 7707454940, erid=2bL9aMPo2e4BA5qnNJQJiMfjb5.',
   image: '/images/brand/offer.webp',
 };
 
