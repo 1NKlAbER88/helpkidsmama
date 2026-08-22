@@ -17,15 +17,26 @@ const { entry } = Astro.props;
 const { Content } = await render(entry);
 const rt = readingTime(entry.body);
 
-// Перелинковка: каждая статья ведёт на 4 следующие по кругу — так у каждой страницы
-// есть входящие внутренние ссылки (без них поисковики считают страницы «сиротами»).
+// Блок «Другие статьи» под отзывами. Гибрид: первая ссылка — соседу по кругу
+// (так входящие внутренние ссылки есть у КАЖДОЙ статьи, иначе часть остаётся «сиротами»
+// и поисковики их не индексируют), ещё три — перемешанные, свои у каждой статьи.
 const allPublished = (await getCollection('articles'))
   .filter((a) => a.data.pubDate.valueOf() <= Date.now())
   .sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf());
 const curIdx = allPublished.findIndex((a) => a.id === entry.id);
-const related = [1, 2, 3, 4]
-  .map((k) => allPublished[(curIdx + k) % allPublished.length])
-  .filter((a) => a && a.id !== entry.id);
+// детерминированный «рандом»: зависит от слага, поэтому у каждой статьи свой набор,
+// но при пересборке ссылки не скачут хаотично
+const seed = [...entry.id].reduce((acc, ch) => (acc * 31 + ch.charCodeAt(0)) % 100003, 7);
+const pool = allPublished
+  .map((a, i) => ({ a, i }))
+  .filter(({ i }) => i !== curIdx && i !== (curIdx + 1) % allPublished.length)
+  .sort((x, y) => ((x.i * seed) % 97) - ((y.i * seed) % 97))
+  .map(({ a }) => a);
+const related = [
+  allPublished[(curIdx + 1) % allPublished.length],
+  ...pool.slice(0, 3),
+].filter((a, i, arr) => a && a.id !== entry.id && arr.findIndex((b) => b.id === a.id) === i);
+
 ---
 <Base
   title={entry.data.title}
@@ -56,7 +67,7 @@ const related = [1, 2, 3, 4]
 
   {related.length > 0 && (
     <section class="related">
-      <h2>Читайте также</h2>
+      <h2>Другие статьи</h2>
       <div class="rel-grid">
         {related.map((a) => (
           <a class="rel-item" href={`/${a.id}/`}>
