@@ -34,7 +34,7 @@ const articles = (await getCollection('articles'))
     </div>
     <div class="grid">
       {articles.map((a, i) => (
-        <a class={`item reveal ${['', 'd1', 'd2'][i % 3]}`} href={`/${a.id}`}>
+        <a class={`item reveal ${['', 'd1', 'd2'][i % 3]}`} href={`/${a.id}/`}>
           {a.data.cover && <div class="thumb"><img src={a.data.cover} alt="" loading="lazy" /></div>}
           <div class="b">
             <h3>{a.data.title}</h3>
