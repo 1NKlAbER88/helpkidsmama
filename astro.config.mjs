@@ -12,7 +12,9 @@ try {
     if (!file.endsWith('.md')) continue;
     const raw = fs.readFileSync(path.join(ARTICLES_DIR, file), 'utf8');
     const m = raw.match(/^pubDate:\s*["']?(\d{4}-\d{2}-\d{2})/m);
-    if (m) pubDates[file.replace(/\.md$/, '')] = m[1];
+    // если статью дописывали, для lastmod важна дата обновления, а не публикации
+    const u = raw.match(/^updatedDate:\s*["']?(\d{4}-\d{2}-\d{2})/m);
+    if (m) pubDates[file.replace(/\.md$/, '')] = (u && u[1] > m[1]) ? u[1] : m[1];
   }
 } catch {}
 // главная обновляется с каждой новой статьёй — берём самую свежую из УЖЕ вышедших

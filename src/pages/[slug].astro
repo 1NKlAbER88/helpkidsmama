@@ -44,6 +44,7 @@ const related = [
   image={entry.data.cover}
   article={true}
   datePublished={entry.data.pubDate}
+  dateModified={entry.data.updatedDate ?? entry.data.pubDate}
 >
   <article class="article">
     <nav class="crumbs" aria-label="Хлебные крошки">
