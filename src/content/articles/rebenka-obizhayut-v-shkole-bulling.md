@@ -5,6 +5,7 @@ description: "Стал тихим, «болит живот» по утрам, п
 pubDate: 2026-08-17
 updatedDate: 2026-08-23
 tags: ["буллинг", "травля в школе", "ребёнка обижают", "защита ребёнка"]
+section: "school"
 cover: "/images/rebenka-obizhayut-v-shkole-bulling/cover.webp"
 ---
 

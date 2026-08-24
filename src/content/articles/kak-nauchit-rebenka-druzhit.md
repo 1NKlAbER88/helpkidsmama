@@ -5,6 +5,7 @@ description: "Стоит в стороне на площадке, на пере�
 pubDate: 2026-08-15
 updatedDate: 2026-08-23
 tags: ["как научить дружить", "нет друзей", "общение со сверстниками", "застенчивость"]
+section: "relations"
 cover: "/images/kak-nauchit-rebenka-druzhit/cover.webp"
 ---
 

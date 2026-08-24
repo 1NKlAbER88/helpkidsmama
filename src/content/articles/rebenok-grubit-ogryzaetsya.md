@@ -5,6 +5,7 @@ description: "«Отстань», «сам такой», хлопнувшая д
 pubDate: 2026-08-18
 updatedDate: 2026-08-23
 tags: ["ребёнок грубит", "подростковая грубость", "агрессия", "общение с подростком"]
+section: "behaviour"
 cover: "/images/rebenok-grubit-ogryzaetsya/cover.webp"
 ---
 

@@ -2,13 +2,22 @@
 import { getCollection } from 'astro:content';
 import Base from '../layouts/Base.astro';
 import { readingTime, formatDate } from '../lib/reading';
-import { SECTIONS } from '../lib/sections';
+import { SECTIONS, groupBySection } from '../lib/sections';
+import { ICONS as SEC_ICONS } from '../lib/section-icons';
 
 // Драфт-модель: статьи с датой в будущем скрыты до своего дня (проявляются при ежедневном редеплое).
 const now = Date.now();
 const articles = (await getCollection('articles'))
   .filter((a) => a.data.pubDate.valueOf() <= now)
   .sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf());
+
+// Раздел берётся из статьи, а если не указан — определяется по тегам.
+// Статья, которую не удалось отнести никуда, видна в общей ленте, но о ней надо знать.
+const { groups, orphans } = groupBySection(articles);
+if (orphans.length) {
+  console.warn(`[разделы] без раздела: ${orphans.map((a) => a.id).join(', ')}. ` +
+    'Добавьте section: в фронтматтер или слово-подсказку в src/lib/sections.ts');
+}
 ---
 <Base
   title="Мамин Помощник — спокойное воспитание детей без криков и наказаний"
@@ -31,26 +40,48 @@ const articles = (await getCollection('articles'))
     </div>
   </header>
 
-  <section class="sections wrap">
+  <section class="sections wrap" id="sections">
     <div class="head reveal">
-      <h2>Разделы</h2>
-      <p>Четыре темы, вокруг которых крутится почти всё родительство</p>
+      <h2>Что сейчас происходит дома?</h2>
+      <p>Выберите тему: внутри собраны разборы для самых частых ситуаций</p>
     </div>
-    <div class="sec-grid">
+    <div class="sec-list">
       {SECTIONS.map((s) => {
-        const items = s.slugs
-          .map((slug) => articles.find((a) => a.id === slug))
-          .filter(Boolean);
-        return items.length > 0 && (
-          <div class="sec-card reveal">
-            <h3>{s.title}</h3>
-            <p class="sec-hint">{s.hint}</p>
-            <ul>
+        const items = groups.get(s.id) ?? [];
+        if (items.length === 0) return null;
+        const word = items.length % 10 === 1 && items.length % 100 !== 11 ? 'статья'
+          : [2, 3, 4].includes(items.length % 10) && ![12, 13, 14].includes(items.length % 100) ? 'статьи' : 'статей';
+        return (
+          <details class="sec reveal">
+            <summary>
+              <span class="sec-ic" set:html={SEC_ICONS[s.id]} />
+              <span class="sec-txt">
+                <span class="sec-name">{s.title}</span>
+                <span class="sec-hint">{s.hint}</span>
+              </span>
+              <span class="sec-count">{items.length} {word}</span>
+              <span class="sec-sign" aria-hidden="true"></span>
+            </summary>
+            <ul class="sec-items">
               {items.map((a) => (
-                <li><a href={`/${a.id}/`}>{a.data.title.split(/[:—–]/)[0]}</a></li>
+                <li>
+                  <a href={`/${a.id}/`}>
+                    {a.data.cover && (
+                      <span class="si-thumb">
+                        {/* отдельная миниатюра 144×108: полноразмерная обложка тут весит в 30 раз больше */}
+                        <img src={`/images/${a.id}/thumb.webp`} alt="" loading="lazy" decoding="async" width="72" height="54" />
+                      </span>
+                    )}
+                    <span class="si-txt">
+                      <span class="si-title">{a.data.title}</span>
+                      <span class="si-sub">{a.data.description.split(/(?<=[?.!])\s/)[0]}</span>
+                    </span>
+                    <span class="si-go" aria-hidden="true">→</span>
+                  </a>
+                </li>
               ))}
             </ul>
-          </div>
+          </details>
         );
       })}
     </div>
@@ -80,18 +111,79 @@ const articles = (await getCollection('articles'))
   </section>
 </Base>
 
+
+
 <style>
   .sections { padding-top: 8px; }
-  .sec-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 18px; }
-  .sec-card {
-    background: #fff; border-radius: 18px; padding: 22px 22px 18px;
-    box-shadow: 0 6px 22px rgba(45, 26, 32, .07);
+  .sec-list { display: flex; flex-direction: column; gap: 12px; }
+
+  .sec {
+    background: #fff; border: 1px solid #f0e2e6; border-radius: 16px;
+    box-shadow: 0 4px 16px rgba(45, 26, 32, .05); overflow: hidden;
   }
-  .sec-card h3 { margin: 0 0 4px; font-size: 20px; color: #2d1a20; }
-  .sec-hint { margin: 0 0 14px; font-size: 14px; color: #9a8288; line-height: 1.4; }
-  .sec-card ul { list-style: none; margin: 0; padding: 0; }
-  .sec-card li { padding: 5px 0; border-top: 1px solid #f2e7ea; }
-  .sec-card li:first-child { border-top: none; }
-  .sec-card a { color: #6f5b61; text-decoration: none; font-size: 15px; line-height: 1.35; display: block; }
-  .sec-card a:hover { color: #b8607a; }
+  .sec[open] { box-shadow: 0 10px 28px rgba(45, 26, 32, .09); }
+
+  .sec summary {
+    display: flex; align-items: center; gap: 14px; padding: 20px 22px;
+    cursor: pointer; list-style: none; user-select: none;
+  }
+  .sec summary::-webkit-details-marker { display: none; }
+
+  .sec-ic { flex: 0 0 auto; width: 26px; height: 26px; color: #c45b7a; display: block; }
+  .sec-ic :global(svg) { width: 26px; height: 26px; display: block; }
+
+  .sec-txt { flex: 1 1 auto; min-width: 0; }
+  .sec-name { display: block; font-size: 20px; font-weight: 700; color: #2d1a20; line-height: 1.25; }
+  .sec-hint { display: block; margin-top: 3px; font-size: 15px; color: #9a8288; line-height: 1.4; }
+
+  .sec-count { flex: 0 0 auto; font-size: 13px; color: #b09aa1; white-space: nowrap; }
+
+  .sec-sign { flex: 0 0 auto; position: relative; width: 16px; height: 16px; }
+  .sec-sign::before, .sec-sign::after {
+    content: ""; position: absolute; background: #c45b7a; border-radius: 2px;
+    transition: transform .25s ease, opacity .25s ease;
+  }
+  .sec-sign::before { left: 0; top: 7px; width: 16px; height: 2px; }
+  .sec-sign::after { left: 7px; top: 0; width: 2px; height: 16px; }
+  .sec[open] .sec-sign::after { transform: rotate(90deg); opacity: 0; }
+
+  .sec-items { list-style: none; margin: 0; padding: 4px 12px 12px; }
+  .sec-items li + li { border-top: 1px solid #f6ecef; }
+  .sec-items a {
+    display: flex; align-items: center; gap: 14px; padding: 11px 10px; border-radius: 12px;
+    text-decoration: none; transition: background .18s ease;
+  }
+  /* подсветка всей строки, а не одного заголовка */
+  .sec-items a:hover { background: #fdf4f7; }
+  .sec-items li:has(a:hover) + li { border-top-color: transparent; }
+
+  .si-thumb {
+    flex: 0 0 auto; width: 72px; height: 54px; border-radius: 9px; overflow: hidden;
+    background: #f7e2e9; box-shadow: 0 2px 8px rgba(45, 26, 32, .08);
+  }
+  .si-thumb img { width: 100%; height: 100%; object-fit: cover; display: block; transition: transform .3s ease; }
+  .sec-items a:hover .si-thumb img { transform: scale(1.06); }
+
+  .si-txt { flex: 1 1 auto; min-width: 0; }
+  .si-title { display: block; font-size: 16px; line-height: 1.35; color: #2d1a20; font-weight: 600; transition: color .18s ease; }
+  .si-sub { display: block; margin-top: 3px; font-size: 14px; line-height: 1.4; color: #9a8288; }
+  .sec-items a:hover .si-title { color: #a8455f; }
+
+  .si-go { flex: 0 0 auto; color: #d9bcc5; font-size: 17px; transition: color .18s ease, transform .18s ease; }
+  .sec-items a:hover .si-go { color: #c45b7a; transform: translateX(3px); }
+
+  @media (max-width: 560px) {
+    .sec summary { padding: 17px 16px; gap: 11px; }
+    .sec-name { font-size: 18px; }
+    .sec-hint { font-size: 14px; }
+    .sec-count { display: none; }
+    .sec-items { padding: 2px 8px 10px; }
+    .sec-items a { gap: 11px; padding: 10px 8px; }
+    .si-thumb { width: 58px; height: 44px; }
+    .si-title { font-size: 15px; }
+    .si-sub { font-size: 13px; }
+    .si-go { display: none; }
+  }
+
+  .sections { padding-top: 8px; }
 </style>

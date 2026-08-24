@@ -5,6 +5,7 @@ description: "«Быстрее!», «мы опаздываем!», носок н
 pubDate: 2026-08-16
 updatedDate: 2026-08-23
 tags: ["тайм-менеджмент для детей", "ребёнок опаздывает", "режим", "самостоятельность"]
+section: "school"
 cover: "/images/rebenok-planirovanie-vremeni/cover.webp"
 ---
 

@@ -5,6 +5,7 @@ description: "Крик из детской, «он первый начал», с
 pubDate: 2026-08-14
 updatedDate: 2026-08-23
 tags: ["детские ссоры", "братья и сёстры", "ревность", "конфликты"]
+section: "relations"
 cover: "/images/detskie-ssory-braty-sestry/cover.webp"
 ---
 
