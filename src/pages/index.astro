@@ -2,6 +2,7 @@
 import { getCollection } from 'astro:content';
 import Base from '../layouts/Base.astro';
 import { readingTime, formatDate } from '../lib/reading';
+import { SECTIONS } from '../lib/sections';
 
 // Драфт-модель: статьи с датой в будущем скрыты до своего дня (проявляются при ежедневном редеплое).
 const now = Date.now();
@@ -9,7 +10,10 @@ const articles = (await getCollection('articles'))
   .filter((a) => a.data.pubDate.valueOf() <= now)
   .sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf());
 ---
-<Base title="Мамин Помощник — спокойное воспитание детей">
+<Base
+  title="Мамин Помощник — спокойное воспитание детей без криков и наказаний"
+  description="Практические разборы для родителей: детские истерики и страхи, школа и домашние задания, ссоры между детьми, телефон, тревога и самостоятельность."
+>
   <header class="hero">
     <div class="bg"><img src="/images/brand/hero.webp" alt="Мама и ребёнок вместе" fetchpriority="high" /></div>
     <div class="waves">
@@ -18,14 +22,39 @@ const articles = (await getCollection('articles'))
     </div>
     <div class="center">
       <div class="hand">как есть, без идеальной картинки</div>
-      <h1>Спокойнее дома<br><i>Ближе к детям</i></h1>
-      <p class="desc">Короткие разборы про детей: что делать вместо криков и запретов — с примерами и нашими промахами</p>
+      <h1>Спокойнее дома<br><i>Ближе к детям</i><span class="h1-key">Спокойное воспитание детей: короткие разборы без криков и нотаций</span></h1>
+      <p class="desc">Что делать вместо запретов — с примерами, готовыми фразами и нашими промахами</p>
       <div class="cta-wrap">
         <a class="btn-ios" href="#list"><svg viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6"/></svg>Смотреть разборы</a>
       </div>
       <p class="platforms-hint">Короткие приёмы — в Telegram и MAX, большие разборы — на Дзене, идеи и карточки — на Pinterest</p>
     </div>
   </header>
+
+  <section class="sections wrap">
+    <div class="head reveal">
+      <h2>Разделы</h2>
+      <p>Четыре темы, вокруг которых крутится почти всё родительство</p>
+    </div>
+    <div class="sec-grid">
+      {SECTIONS.map((s) => {
+        const items = s.slugs
+          .map((slug) => articles.find((a) => a.id === slug))
+          .filter(Boolean);
+        return items.length > 0 && (
+          <div class="sec-card reveal">
+            <h3>{s.title}</h3>
+            <p class="sec-hint">{s.hint}</p>
+            <ul>
+              {items.map((a) => (
+                <li><a href={`/${a.id}/`}>{a.data.title.split(/[:—–]/)[0]}</a></li>
+              ))}
+            </ul>
+          </div>
+        );
+      })}
+    </div>
+  </section>
 
   <section class="articles wrap" id="list">
     <div class="head reveal">
@@ -50,3 +79,19 @@ const articles = (await getCollection('articles'))
     </div>
   </section>
 </Base>
+
+<style>
+  .sections { padding-top: 8px; }
+  .sec-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 18px; }
+  .sec-card {
+    background: #fff; border-radius: 18px; padding: 22px 22px 18px;
+    box-shadow: 0 6px 22px rgba(45, 26, 32, .07);
+  }
+  .sec-card h3 { margin: 0 0 4px; font-size: 20px; color: #2d1a20; }
+  .sec-hint { margin: 0 0 14px; font-size: 14px; color: #9a8288; line-height: 1.4; }
+  .sec-card ul { list-style: none; margin: 0; padding: 0; }
+  .sec-card li { padding: 5px 0; border-top: 1px solid #f2e7ea; }
+  .sec-card li:first-child { border-top: none; }
+  .sec-card a { color: #6f5b61; text-decoration: none; font-size: 15px; line-height: 1.35; display: block; }
+  .sec-card a:hover { color: #b8607a; }
+</style>
