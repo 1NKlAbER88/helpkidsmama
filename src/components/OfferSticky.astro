@@ -1,0 +1,119 @@
+---
+// Мини-версия оффера, всплывает после половины прочитанной статьи.
+// Не перекрывает текст: на десктопе висит в правом нижнем углу, на телефоне — узкой полосой снизу.
+// Прячется, пока в кадре большая карточка оффера или врезка в тексте, чтобы не дублировать её.
+import { OFFER } from '../lib/site';
+---
+<aside class="os" data-offer-sticky hidden>
+  <button class="os-close" type="button" aria-label="Скрыть" data-offer-close>
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true">
+      <path d="M6 6l12 12M18 6L6 18" />
+    </svg>
+  </button>
+  <a class="os-link" href={OFFER.href} target="_blank" rel="noopener sponsored nofollow">
+    <span class="os-pic"><img src={OFFER.image} alt="" loading="lazy" width="72" height="72" /></span>
+    <span class="os-body">
+      <span class="os-head">{OFFER.head2}</span>
+      <span class="os-text">45 минут с педагогом: диагностическая карта и что улучшить дома</span>
+    </span>
+    <span class="os-cta">{OFFER.cta}</span>
+  </a>
+  <p class="os-mark">{OFFER.disclosure}</p>
+</aside>
+
+<style>
+  .os {
+    position: fixed; z-index: 60; right: 20px; bottom: 20px; width: 380px; max-width: calc(100vw - 32px);
+    background: #fff; border: 1px solid rgba(214, 51, 108, .16); border-radius: 18px;
+    box-shadow: 0 16px 44px rgba(45, 26, 32, .18); padding: 12px 14px 8px;
+    opacity: 0; transform: translateY(14px); pointer-events: none;
+    transition: opacity .28s ease, transform .28s ease;
+  }
+  .os[data-show] { opacity: 1; transform: translateY(0); pointer-events: auto; }
+  .os[hidden] { display: none; }
+
+  .os-link { display: flex; align-items: center; gap: 12px; text-decoration: none; }
+  .os-pic { flex: 0 0 auto; width: 62px; height: 62px; border-radius: 12px; overflow: hidden; background: #f7e2e9; }
+  .os-pic img { width: 100%; height: 100%; object-fit: cover; display: block; }
+
+  .os-body { flex: 1 1 auto; min-width: 0; }
+  .os-head {
+    display: block; font-family: -apple-system, "Segoe UI", Arial, sans-serif;
+    font-size: 15px; font-weight: 800; color: #e84c8b; line-height: 1.2;
+  }
+  .os-text { display: block; margin-top: 3px; font-size: 12.5px; line-height: 1.35; color: #6b5860; }
+
+  .os-cta {
+    flex: 0 0 auto; align-self: center; background: #e84c8b; color: #fff; font-size: 13px; font-weight: 700;
+    padding: 9px 16px; border-radius: 999px; white-space: nowrap;
+    box-shadow: 0 6px 16px rgba(232, 76, 139, .28); transition: background .15s ease;
+  }
+  .os-link:hover .os-cta { background: #d6336c; }
+
+  .os-mark { margin: 8px 0 0; font-size: 10px; line-height: 1.35; color: #a9989f; }
+
+  .os-close {
+    position: absolute; top: -10px; right: -10px; width: 28px; height: 28px; border-radius: 50%;
+    background: #fff; border: 1px solid #efdfe4; color: #9a8288; cursor: pointer;
+    display: flex; align-items: center; justify-content: center; padding: 0;
+    box-shadow: 0 4px 12px rgba(45, 26, 32, .14);
+  }
+  .os-close svg { width: 14px; height: 14px; }
+  .os-close:hover { color: #d6336c; }
+
+  @media (max-width: 720px) {
+    .os { left: 10px; right: 10px; bottom: 10px; width: auto; padding: 10px 12px 6px; border-radius: 16px; }
+    .os-pic { width: 48px; height: 48px; }
+    .os-text { display: none; }
+    .os-head { font-size: 14px; }
+    .os-cta { padding: 8px 14px; font-size: 12.5px; }
+    .os-mark { font-size: 9.5px; }
+  }
+</style>
+
+<script is:inline>
+  (function () {
+    var box = document.querySelector('[data-offer-sticky]');
+    var article = document.querySelector('.article');
+    if (!box || !article) return;
+    if (sessionStorage.getItem('offerStickyClosed') === '1') return;
+
+    box.hidden = false;
+    var closed = false;
+    var nearBigOffer = false;
+
+    // пока на экране большая карточка оффера или врезка — мини-версию не показываем
+    if ('IntersectionObserver' in window) {
+      var io = new IntersectionObserver(function (entries) {
+        nearBigOffer = entries.some(function (e) { return e.isIntersecting; });
+        update();
+      }, { rootMargin: '0px 0px -10% 0px' });
+      document.querySelectorAll('.offer-block, [data-offer-inline]').forEach(function (el) { io.observe(el); });
+    }
+
+    function readProgress() {
+      var rect = article.getBoundingClientRect();
+      var total = rect.height - window.innerHeight;
+      if (total <= 0) return 1;
+      return Math.min(1, Math.max(0, -rect.top / total));
+    }
+
+    function update() {
+      if (closed) return;
+      var show = readProgress() >= 0.5 && !nearBigOffer;
+      if (show) box.setAttribute('data-show', '');
+      else box.removeAttribute('data-show');
+    }
+
+    document.querySelector('[data-offer-close]').addEventListener('click', function () {
+      closed = true;
+      box.removeAttribute('data-show');
+      sessionStorage.setItem('offerStickyClosed', '1');
+      setTimeout(function () { box.hidden = true; }, 300);
+    });
+
+    window.addEventListener('scroll', update, { passive: true });
+    window.addEventListener('resize', update);
+    update();
+  })();
+</script>

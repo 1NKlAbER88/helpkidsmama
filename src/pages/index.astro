@@ -115,7 +115,11 @@ if (orphans.length) {
 
 <style>
   .sections { padding-top: 8px; }
-  .sec-list { display: flex; flex-direction: column; gap: 12px; }
+  .sections .head { text-align: center; margin-bottom: 26px; }
+  .sections .head p { color: #9a8288; margin-top: 8px; }
+  /* на широком экране карточка во всю ширину выглядит вытянутой — раскладываем 2×2 */
+  .sec-list { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 14px; align-items: start; }
+  @media (max-width: 860px) { .sec-list { grid-template-columns: 1fr; gap: 12px; } }
 
   .sec {
     background: #fff; border: 1px solid #f0e2e6; border-radius: 16px;
