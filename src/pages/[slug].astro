@@ -2,7 +2,6 @@
 import { getCollection, render } from 'astro:content';
 import Base from '../layouts/Base.astro';
 import Offer from '../components/Offer.astro';
-import OfferInline from '../components/OfferInline.astro';
 import OfferSticky from '../components/OfferSticky.astro';
 import Reviews from '../components/Reviews.astro';
 import { readingTime, formatDate } from '../lib/reading';
@@ -71,7 +70,6 @@ const related = [
     )}
     <div class="prose">
       <Content />
-      <OfferInline />
     </div>
   </article>
   <Offer />

@@ -1,7 +1,7 @@
 ---
-// Мини-версия оффера, всплывает после половины прочитанной статьи.
-// Не перекрывает текст: на десктопе висит в правом нижнем углу, на телефоне — узкой полосой снизу.
-// Прячется, пока в кадре большая карточка оффера или врезка в тексте, чтобы не дублировать её.
+// Всплывающая версия оффера: тот же текст, что в большой карточке внизу статьи.
+// Появляется после половины прочтения, висит снизу по центру и исчезает,
+// только если её закрыли или читатель дошёл до большой карточки и отзывов.
 import { OFFER } from '../lib/site';
 ---
 <aside class="os" data-offer-sticky hidden>
@@ -10,64 +10,80 @@ import { OFFER } from '../lib/site';
       <path d="M6 6l12 12M18 6L6 18" />
     </svg>
   </button>
+
   <a class="os-link" href={OFFER.href} target="_blank" rel="noopener sponsored nofollow">
-    <span class="os-pic"><img src={OFFER.image} alt="" loading="lazy" width="72" height="72" /></span>
+    <span class="os-pic"><img src={OFFER.image} alt="" loading="lazy" width="150" height="110" /></span>
     <span class="os-body">
-      <span class="os-head">{OFFER.head2}</span>
-      <span class="os-text">45 минут с педагогом: диагностическая карта и что улучшить дома</span>
+      <span class="os-head">{OFFER.head1} <b>{OFFER.head2}</b></span>
+      <span class="os-text">{OFFER.text}</span>
     </span>
-    <span class="os-cta">{OFFER.cta}</span>
+    <span class="os-act"><span class="os-cta">{OFFER.cta} <span aria-hidden="true">→</span></span></span>
   </a>
   <p class="os-mark">{OFFER.disclosure}</p>
 </aside>
 
 <style>
   .os {
-    position: fixed; z-index: 60; right: 20px; bottom: 20px; width: 380px; max-width: calc(100vw - 32px);
-    background: #fff; border: 1px solid rgba(214, 51, 108, .16); border-radius: 18px;
-    box-shadow: 0 16px 44px rgba(45, 26, 32, .18); padding: 12px 14px 8px;
-    opacity: 0; transform: translateY(14px); pointer-events: none;
-    transition: opacity .28s ease, transform .28s ease;
+    position: fixed; z-index: 60; left: 50%; bottom: 20px; width: min(720px, calc(100vw - 32px));
+    background: #fff; border: 1px solid rgba(214, 51, 108, .16); border-radius: 20px;
+    box-shadow: 0 18px 48px rgba(45, 26, 32, .20); padding: 14px 18px 8px;
+    opacity: 0; transform: translate(-50%, 18px); pointer-events: none;
+    transition: opacity .3s ease, transform .3s ease;
   }
-  .os[data-show] { opacity: 1; transform: translateY(0); pointer-events: auto; }
+  .os[data-show] { opacity: 1; transform: translate(-50%, 0); pointer-events: auto; }
   .os[hidden] { display: none; }
 
-  .os-link { display: flex; align-items: center; gap: 12px; text-decoration: none; }
-  .os-pic { flex: 0 0 auto; width: 62px; height: 62px; border-radius: 12px; overflow: hidden; background: #f7e2e9; }
-  .os-pic img { width: 100%; height: 100%; object-fit: cover; display: block; }
+  .os-link { display: flex; align-items: center; gap: 16px; text-decoration: none; }
+
+  .os-pic { flex: 0 0 auto; width: 130px; height: 96px; border-radius: 14px; overflow: hidden; background: #f7e2e9; }
+  .os-pic img { width: 100%; height: 100%; object-fit: cover; object-position: center 30%; display: block; transition: transform .3s ease; }
+  .os-link:hover .os-pic img { transform: scale(1.04); }
 
   .os-body { flex: 1 1 auto; min-width: 0; }
   .os-head {
     display: block; font-family: -apple-system, "Segoe UI", Arial, sans-serif;
-    font-size: 15px; font-weight: 800; color: #e84c8b; line-height: 1.2;
+    font-size: 16px; font-weight: 800; line-height: 1.25; color: #2d1a20;
   }
-  .os-text { display: block; margin-top: 3px; font-size: 12.5px; line-height: 1.35; color: #6b5860; }
+  .os-head b { color: #e84c8b; font-weight: 800; }
+  .os-text { display: block; margin-top: 6px; font-size: 13.5px; line-height: 1.5; color: #6b5860; }
 
+  .os-act { flex: 0 0 auto; }
   .os-cta {
-    flex: 0 0 auto; align-self: center; background: #e84c8b; color: #fff; font-size: 13px; font-weight: 700;
-    padding: 9px 16px; border-radius: 999px; white-space: nowrap;
-    box-shadow: 0 6px 16px rgba(232, 76, 139, .28); transition: background .15s ease;
+    display: inline-flex; align-items: center; gap: 9px; background: #e84c8b; color: #fff;
+    font-size: 14px; font-weight: 700; padding: 12px 26px; border-radius: 999px; white-space: nowrap;
+    box-shadow: 0 8px 20px rgba(232, 76, 139, .28); transition: background .15s ease, transform .15s ease;
   }
-  .os-link:hover .os-cta { background: #d6336c; }
+  .os-link:hover .os-cta { background: #d6336c; transform: translateY(-1px); }
 
-  .os-mark { margin: 8px 0 0; font-size: 10px; line-height: 1.35; color: #a9989f; }
+  .os-mark { margin: 10px 0 0; font-size: 10.5px; line-height: 1.4; color: #a9989f; }
 
   .os-close {
-    position: absolute; top: -10px; right: -10px; width: 28px; height: 28px; border-radius: 50%;
-    background: #fff; border: 1px solid #efdfe4; color: #9a8288; cursor: pointer;
+    position: absolute; top: -11px; right: -11px; z-index: 2; width: 30px; height: 30px; border-radius: 50%;
+    background: #fff; border: 1px solid #f0dfe4; color: #6b5860; cursor: pointer;
     display: flex; align-items: center; justify-content: center; padding: 0;
-    box-shadow: 0 4px 12px rgba(45, 26, 32, .14);
+    box-shadow: 0 4px 14px rgba(45, 26, 32, .16);
   }
-  .os-close svg { width: 14px; height: 14px; }
+  .os-close svg { width: 15px; height: 15px; }
   .os-close:hover { color: #d6336c; }
 
-  @media (max-width: 720px) {
-    .os { left: 10px; right: 10px; bottom: 10px; width: auto; padding: 10px 12px 6px; border-radius: 16px; }
-    .os-pic { width: 48px; height: 48px; }
-    .os-text { display: none; }
-    .os-head { font-size: 14px; }
-    .os-cta { padding: 8px 14px; font-size: 12.5px; }
-    .os-mark { font-size: 9.5px; }
+  /* планшет: картинка мешает, текст важнее */
+  @media (max-width: 860px) {
+    .os-pic { width: 96px; height: 74px; }
+    .os-text { font-size: 13px; }
+  }
+
+  /* телефон: без картинки, кнопка под текстом на всю ширину */
+  @media (max-width: 640px) {
+    .os { left: 10px; right: 10px; transform: translateY(18px); width: auto; bottom: 10px; padding: 14px 14px 8px; border-radius: 18px; }
+    .os[data-show] { transform: translateY(0); }
+    .os-link { flex-wrap: wrap; gap: 10px; }
+    .os-pic { display: none; }
+    .os-head { font-size: 15px; }
+    .os-text { font-size: 12.5px; margin-top: 5px; }
+    .os-act { flex: 1 1 100%; }
+    .os-cta { width: 100%; justify-content: center; padding: 11px 18px; }
+    .os-mark { margin-top: 8px; font-size: 10px; }
+    .os-close { top: -10px; right: -6px; }
   }
 </style>
 
@@ -79,16 +95,23 @@ import { OFFER } from '../lib/site';
     if (sessionStorage.getItem('offerStickyClosed') === '1') return;
 
     box.hidden = false;
-    var closed = false;
-    var nearBigOffer = false;
+    var done = false; // закрыли крестиком либо дочитали до нижних блоков
 
-    // пока на экране большая карточка оффера или врезка — мини-версию не показываем
-    if ('IntersectionObserver' in window) {
+    function finish() {
+      if (done) return;
+      done = true;
+      box.removeAttribute('data-show');
+      setTimeout(function () { box.hidden = true; }, 320);
+      window.removeEventListener('scroll', update);
+    }
+
+    // как только в кадре большая карточка оффера или отзывы — всплывающая больше не нужна
+    var tails = document.querySelectorAll('.offer-block, .reviews-block');
+    if (tails.length && 'IntersectionObserver' in window) {
       var io = new IntersectionObserver(function (entries) {
-        nearBigOffer = entries.some(function (e) { return e.isIntersecting; });
-        update();
-      }, { rootMargin: '0px 0px -10% 0px' });
-      document.querySelectorAll('.offer-block, [data-offer-inline]').forEach(function (el) { io.observe(el); });
+        if (entries.some(function (e) { return e.isIntersecting; })) finish();
+      }, { rootMargin: '0px 0px -12% 0px' });
+      tails.forEach(function (el) { io.observe(el); });
     }
 
     function readProgress() {
@@ -99,17 +122,13 @@ import { OFFER } from '../lib/site';
     }
 
     function update() {
-      if (closed) return;
-      var show = readProgress() >= 0.5 && !nearBigOffer;
-      if (show) box.setAttribute('data-show', '');
-      else box.removeAttribute('data-show');
+      if (done) return;
+      if (readProgress() >= 0.5) box.setAttribute('data-show', '');
     }
 
     document.querySelector('[data-offer-close]').addEventListener('click', function () {
-      closed = true;
-      box.removeAttribute('data-show');
       sessionStorage.setItem('offerStickyClosed', '1');
-      setTimeout(function () { box.hidden = true; }, 300);
+      finish();
     });
 
     window.addEventListener('scroll', update, { passive: true });
