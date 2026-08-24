@@ -88,7 +88,9 @@ const jsonLd = article
 const ga4Id = import.meta.env.PUBLIC_GA4_ID || 'G-GBDJ0THHWX';
 ---
 <!doctype html>
-<html lang="ru">
+<!-- prefix обязателен: без него валидатор Яндекса не понимает теги article:published_time
+     и отдаёт ошибку «префикс article неизвестен валидатору» -->
+<html lang="ru" prefix="og: https://ogp.me/ns# article: https://ogp.me/ns/article#">
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
