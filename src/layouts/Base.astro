@@ -86,6 +86,9 @@ const jsonLd = article
 
 // Google Analytics 4: ID из env PUBLIC_GA4_ID (напр. G-XXXXXXX), задать при сборке. Пусто — не рендерится.
 const ga4Id = import.meta.env.PUBLIC_GA4_ID || 'G-GBDJ0THHWX';
+// Яндекс.Метрика: номер счётчика. Нужна не только ради статистики - Вебмастер умеет
+// обходить сайт по счётчику, то есть узнаёт о новых страницах быстрее, чем по sitemap.
+const metrikaId = import.meta.env.PUBLIC_METRIKA_ID || '112174846';
 ---
 <!doctype html>
 <!-- prefix обязателен: без него валидатор Яндекса не понимает теги article:published_time
@@ -125,6 +128,9 @@ const ga4Id = import.meta.env.PUBLIC_GA4_ID || 'G-GBDJ0THHWX';
       <script is:inline async src={`https://www.googletagmanager.com/gtag/js?id=${ga4Id}`}></script>
       <script is:inline set:html={`window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','${ga4Id}');`} />
     </Fragment>
+  )}
+  {metrikaId && (
+    <script is:inline set:html={`(function(m,e,t,r,i,k,a){m[i]=m[i]||function(){(m[i].a=m[i].a||[]).push(arguments)};m[i].l=1*new Date();for(var j=0;j<e.scripts.length;j++){if(e.scripts[j].src===r){return;}}k=e.createElement(t),a=e.getElementsByTagName(t)[0],k.async=1,k.src=r,a.parentNode.insertBefore(k,a)})(window,document,'script','https://mc.yandex.ru/metrika/tag.js','ym');ym(${metrikaId},'init',{ssr:true,webvisor:true,clickmap:true,accurateTrackBounce:true,trackLinks:true});`} />
   )}
 </head>
 <body>
@@ -181,5 +187,8 @@ const ga4Id = import.meta.env.PUBLIC_GA4_ID || 'G-GBDJ0THHWX';
       if (y) y.textContent = new Date().getFullYear();
     })();
   </script>
+  {metrikaId && (
+    <noscript><div><img src={`https://mc.yandex.ru/watch/${metrikaId}`} style="position:absolute;left:-9999px" alt="" /></div></noscript>
+  )}
 </body>
 </html>
