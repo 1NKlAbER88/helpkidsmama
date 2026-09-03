@@ -1,0 +1,93 @@
+---
+import { getCollection } from 'astro:content';
+import Base from '../../layouts/Base.astro';
+import OfferSticky from '../../components/OfferSticky.astro';
+
+const now = Date.now();
+const sets = (await getCollection('cards'))
+  .filter((s) => s.data.pubDate.valueOf() <= now)
+  .sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf());
+const total = sets.reduce((n, s) => n + s.data.items.length, 0);
+---
+<Base
+  title="Карточки для печати: задания, чек листы и трекеры для детей"
+  description="Готовые карточки для печати: лабиринты, задания, чек листы, трекеры привычек и карточки эмоций. Скачать PDF бесплатно и сразу, без регистрации."
+>
+  <section class="hub">
+    <nav class="crumbs" aria-label="Хлебные крошки">
+      <a href="/">Главная</a><span class="crumb-sep">→</span><span>Карточки для печати</span>
+    </nav>
+    <h1>Карточки для печати</h1>
+    <p class="lead">
+      Готовые листы А4: распечатать и заниматься. Лабиринты, задания на логику и внимание,
+      чек листы, трекеры привычек, карточки эмоций. Всё бесплатно и сразу, без регистрации
+      и без подписки на рассылку.
+    </p>
+    {sets.length > 0 && (
+      <p class="count">{sets.length} {sets.length === 1 ? 'набор' : 'набора'} · {total} карточек</p>
+    )}
+
+    {sets.length === 0 ? (
+      <p class="empty">Первые наборы появятся здесь совсем скоро.</p>
+    ) : (
+      <div class="grid">
+        {sets.map((s) => (
+          <a class="item" href={`/kartochki/${s.id}/`}>
+            {s.data.cover && <div class="thumb"><img src={s.data.cover} alt="" loading="lazy" /></div>}
+            <div class="b">
+              <h2>{s.data.title}</h2>
+              <p>{s.data.description}</p>
+              <span class="meta">
+                {s.data.items.length} карточек{s.data.ages ? ` · ${s.data.ages}` : ''}
+              </span>
+            </div>
+          </a>
+        ))}
+      </div>
+    )}
+
+    <div class="how">
+      <h2>Как это работает</h2>
+      <p>
+        Каждая карточка это отдельный PDF формата А4. Нажимаете «Скачать PDF», файл
+        сохраняется, дальше печатаете на любом принтере, хоть на чёрно-белом. Печатать можно
+        сколько угодно раз: для своих детей, для группы в саду, для занятий в школе.
+      </p>
+      <p>
+        Задания со структурой (лабиринты, трекеры, прописи) мы собираем программой, а не
+        рисуем картинкой. Поэтому у лабиринта всегда есть выход, у трекера ровные клетки,
+        а у прописей правильная форма буквы.
+      </p>
+    </div>
+  </section>
+  <OfferSticky />
+</Base>
+
+<style>
+  .hub { max-width: 1080px; margin: 0 auto; padding: 26px 20px 60px; }
+  .crumbs { display: flex; align-items: center; gap: 8px; font-size: 14px; color: #9a8288; margin-bottom: 14px; }
+  .crumbs a { color: #b8607a; text-decoration: none; }
+  .crumbs a:hover { text-decoration: underline; }
+  .crumb-sep { opacity: .5; }
+  h1 { font-size: clamp(28px, 4vw, 40px); margin: 0 0 14px; color: #2d1a20; }
+  .lead { font-size: 19px; line-height: 1.6; color: #5b4750; margin: 0 0 10px; max-width: 720px; }
+  .count { font-size: 15px; color: #9a8288; margin: 0 0 28px; }
+  .empty { font-size: 17px; color: #6b5560; }
+
+  .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 20px; }
+  .item {
+    display: flex; flex-direction: column; background: #fff; border-radius: 18px; overflow: hidden;
+    text-decoration: none; color: inherit; box-shadow: 0 6px 22px rgba(45, 26, 32, .07);
+    transition: transform .15s, box-shadow .15s;
+  }
+  .item:hover { transform: translateY(-2px); box-shadow: 0 10px 28px rgba(45, 26, 32, .11); }
+  .thumb img { display: block; width: 100%; height: 210px; object-fit: cover; object-position: top center; }
+  .b { padding: 16px 18px 20px; }
+  .b h2 { font-size: 19px; margin: 0 0 8px; color: #2d1a20; }
+  .b p { font-size: 15px; color: #6b5560; margin: 0 0 10px; }
+  .meta { font-size: 14px; color: #9a8288; }
+
+  .how { margin-top: 52px; max-width: 760px; }
+  .how h2 { font-size: 26px; margin: 0 0 14px; color: #2d1a20; }
+  .how p { font-size: 17px; line-height: 1.7; color: #5b4750; margin: 0 0 14px; }
+</style>

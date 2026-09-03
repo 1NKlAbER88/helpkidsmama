@@ -1,0 +1,141 @@
+---
+import { getCollection, render } from 'astro:content';
+import Base from '../../layouts/Base.astro';
+import Offer from '../../components/Offer.astro';
+import Reviews from '../../components/Reviews.astro';
+import OfferSticky from '../../components/OfferSticky.astro';
+import { formatDate } from '../../lib/reading';
+
+export async function getStaticPaths() {
+  const now = Date.now();
+  const sets = (await getCollection('cards'))
+    .filter((entry) => entry.data.pubDate.valueOf() <= now);
+  return sets.map((entry) => ({ params: { slug: entry.id }, props: { entry } }));
+}
+
+const { entry } = Astro.props;
+const { Content } = await render(entry);
+
+// Вопросы из «Частые вопросы» -> FAQPage, как в статьях.
+const faqSection = entry.body.split(/^##\s+Частые вопросы\s*$/m)[1]?.split(/^##\s+/m)[0] ?? '';
+const faq = [...faqSection.matchAll(/\*\*(.+?)\*\*\s*([^\n]+)/g)]
+  .map((m) => ({ q: m[1].trim(), a: m[2].trim() }))
+  .filter((f) => f.q.length > 5 && f.a.length > 20);
+
+// Другие наборы, чтобы у каждого были входящие внутренние ссылки.
+const others = (await getCollection('cards'))
+  .filter((s) => s.data.pubDate.valueOf() <= Date.now() && s.id !== entry.id)
+  .slice(0, 3);
+---
+<Base
+  title={entry.data.seoTitle ?? entry.data.title}
+  description={entry.data.description}
+  image={entry.data.cover}
+  article={true}
+  datePublished={entry.data.pubDate}
+  dateModified={entry.data.updatedDate ?? entry.data.pubDate}
+  faq={faq}
+>
+  <article class="article">
+    <nav class="crumbs" aria-label="Хлебные крошки">
+      <a href="/">Главная</a><span class="crumb-sep">→</span>
+      <a href="/kartochki/">Карточки для печати</a><span class="crumb-sep">→</span><span>Набор</span>
+    </nav>
+    <div class="a-meta">
+      <span>Для печати</span><span class="dot"></span>
+      <span>{entry.data.items.length} карточек</span>
+      {entry.data.ages && (<><span class="dot"></span><span>{entry.data.ages}</span></>)}
+      <span class="dot"></span><span>{formatDate(entry.data.pubDate)}</span>
+    </div>
+    <h1>{entry.data.title}</h1>
+    <p class="lead">{entry.data.description}</p>
+
+    <div class="cards">
+      {entry.data.items.map((it) => (
+        <div class="card" id={it.id}>
+          <a class="card-img" href={it.file} download>
+            <img src={it.preview} alt={`${it.title}: лабиринт для печати`} loading="lazy" width="794" height="1123" />
+          </a>
+          <div class="card-b">
+            <span class={`lvl lvl-${it.level}`}>{it.level}</span>
+            <h2>{it.title}</h2>
+            <p>{it.sub}</p>
+            <a class="dl" href={it.file} download>Скачать PDF</a>
+          </div>
+        </div>
+      ))}
+    </div>
+
+    <div class="prose"><Content /></div>
+  </article>
+
+  <Offer />
+  <Reviews slug={entry.id} />
+  <OfferSticky />
+
+  {others.length > 0 && (
+    <section class="related">
+      <h2>Другие наборы для печати</h2>
+      <div class="rel-grid">
+        {others.map((s) => (
+          <a class="rel-item" href={`/kartochki/${s.id}/`}>
+            {s.data.cover && <div class="rel-thumb"><img src={s.data.cover} alt="" loading="lazy" /></div>}
+            <div class="rel-b">
+              <h3>{s.data.title}</h3>
+              <p>{s.data.description}</p>
+              <span class="rel-more">Смотреть →</span>
+            </div>
+          </a>
+        ))}
+      </div>
+      <a class="rel-all" href="/kartochki/">Все наборы →</a>
+    </section>
+  )}
+</Base>
+
+<style>
+  .crumbs { display: flex; align-items: center; gap: 8px; font-size: 14px; color: #9a8288; margin-bottom: 14px; flex-wrap: wrap; }
+  .crumbs a { color: #b8607a; text-decoration: none; }
+  .crumbs a:hover { text-decoration: underline; }
+  .crumb-sep { opacity: .5; }
+  .lead { font-size: 19px; line-height: 1.6; color: #5b4750; margin: 0 0 30px; }
+
+  .cards { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 22px; margin: 0 0 44px; }
+  .card {
+    background: #fff; border-radius: 18px; overflow: hidden;
+    box-shadow: 0 6px 22px rgba(45, 26, 32, .07); display: flex; flex-direction: column;
+    scroll-margin-top: 90px;   /* пин ведёт на якорь, заголовок не должен уезжать под шапку */
+  }
+  .card-img { display: block; background: #f6f1f3; }
+  .card-img img { display: block; width: 100%; height: auto; }
+  .card-b { padding: 16px 18px 20px; display: flex; flex-direction: column; gap: 8px; }
+  .card-b h2 { font-size: 20px; margin: 0; color: #2d1a20; }
+  .card-b p { margin: 0; font-size: 15px; color: #6b5560; }
+  .lvl {
+    align-self: flex-start; font-size: 12px; font-weight: 700; letter-spacing: .02em;
+    padding: 3px 10px; border-radius: 999px; text-transform: uppercase;
+  }
+  .lvl-лёгкий { background: #e7f6ec; color: #2f7a4a; }
+  .lvl-средний { background: #fdf1e0; color: #a4661a; }
+  .lvl-сложный { background: #fdeaea; color: #a8383c; }
+  .dl {
+    margin-top: 6px; display: inline-block; text-align: center; text-decoration: none;
+    background: #b8607a; color: #fff; font-weight: 700; font-size: 15px;
+    padding: 11px 16px; border-radius: 12px; transition: background .15s;
+  }
+  .dl:hover { background: #a04f68; }
+
+  .related { max-width: 1080px; margin: 56px auto 72px; padding: 0 20px; }
+  .related h2 { font-size: clamp(24px, 3vw, 32px); margin: 0 0 22px; color: #2d1a20; }
+  .rel-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); gap: 18px; }
+  .rel-item {
+    display: flex; flex-direction: column; background: #fff; border-radius: 18px; overflow: hidden;
+    text-decoration: none; color: inherit; box-shadow: 0 6px 22px rgba(45, 26, 32, .07);
+  }
+  .rel-thumb img { display: block; width: 100%; height: 150px; object-fit: cover; }
+  .rel-b { padding: 14px 16px 18px; }
+  .rel-b h3 { font-size: 17px; margin: 0 0 6px; color: #2d1a20; }
+  .rel-b p { font-size: 14px; color: #6b5560; margin: 0 0 10px; }
+  .rel-more { font-size: 14px; color: #b8607a; font-weight: 600; }
+  .rel-all { display: inline-block; margin-top: 18px; color: #b8607a; font-weight: 600; text-decoration: none; }
+</style>

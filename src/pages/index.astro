@@ -109,11 +109,31 @@ if (orphans.length) {
       ))}
     </div>
   </section>
+
+  <section class="promo wrap">
+    <div class="promo-b">
+      <h2>Карточки для печати</h2>
+      <p>Лабиринты, задания, чек листы и трекеры привычек. Готовые листы А4: скачать PDF бесплатно и сразу, без регистрации.</p>
+      <a class="promo-cta" href="/kartochki/">Смотреть карточки →</a>
+    </div>
+  </section>
 </Base>
 
 
 
 <style>
+  .promo { margin: 10px auto 64px; }
+  .promo-b {
+    background: linear-gradient(135deg, #fdeef5 0%, #f4f0fb 100%);
+    border-radius: 22px; padding: 30px 28px; text-align: center;
+  }
+  .promo-b h2 { font-size: clamp(24px, 3vw, 30px); margin: 0 0 10px; color: #2d1a20; }
+  .promo-b p { font-size: 17px; color: #5b4750; margin: 0 auto 18px; max-width: 560px; line-height: 1.6; }
+  .promo-cta {
+    display: inline-block; background: #b8607a; color: #fff; text-decoration: none;
+    font-weight: 700; padding: 13px 24px; border-radius: 13px; transition: background .15s;
+  }
+  .promo-cta:hover { background: #a04f68; }
   .sections { padding-top: 8px; }
   .sections .head { text-align: center; margin-bottom: 26px; }
   .sections .head p { color: #9a8288; margin-top: 8px; }
