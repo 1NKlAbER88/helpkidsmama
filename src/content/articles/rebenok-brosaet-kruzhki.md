@@ -4,7 +4,7 @@ seoTitle: "Ребёнок бросает кружки: что делать, ра
 description: "Ребёнок просится с занятий через месяц после начала? Разбираю, чем скука отличается от настоящей причины, когда бросать можно и как договориться, чтобы это не стало привычкой."
 pubDate: 2026-09-11
 updatedDate: 2026-09-11
-cover: "/images/rebenok-brosaet-kruzhki/cover.webp?v=2"
+cover: "/images/rebenok-brosaet-kruzhki/cover-v2.webp"
 tags: ["ребёнок бросает кружки", "секции", "мотивация", "воспитание"]
 section: "behaviour"
 ---

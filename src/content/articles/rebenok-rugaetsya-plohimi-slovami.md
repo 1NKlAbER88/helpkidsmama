@@ -4,7 +4,7 @@ seoTitle: "Ребёнок ругается матом: что делать ро�
 description: "Ребёнок принёс из садика или двора плохие слова и повторяет их? Разбираю, зачем он это делает в 3, 6 и 9 лет и что говорить вместо запретов и наказаний."
 pubDate: 2026-09-10
 updatedDate: 2026-09-11
-cover: "/images/rebenok-rugaetsya-plohimi-slovami/cover.webp?v=2"
+cover: "/images/rebenok-rugaetsya-plohimi-slovami/cover-v2.webp"
 tags: ["ребёнок ругается", "плохие слова", "поведение", "воспитание"]
 section: "behaviour"
 ---

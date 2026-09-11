@@ -91,6 +91,9 @@ const jsonLd = article
 const ga4Id = import.meta.env.PUBLIC_GA4_ID || 'G-GBDJ0THHWX';
 // Яндекс.Метрика: номер счётчика. Нужна не только ради статистики - Вебмастер умеет
 // обходить сайт по счётчику, то есть узнаёт о новых страницах быстрее, чем по sitemap.
+// ВАЖНО: в параметрах init не должно быть ssr:true. С ним tag.js не создаёт счётчик
+// вообще (проверено в браузере: getCounters() пуст, куки _ym_uid нет, хиты не уходят),
+// и Метрика показывает нули при живом трафике. Сайт статический, ssr тут и не нужен.
 const metrikaId = import.meta.env.PUBLIC_METRIKA_ID || '112174846';
 ---
 <!doctype html>
@@ -133,7 +136,7 @@ const metrikaId = import.meta.env.PUBLIC_METRIKA_ID || '112174846';
     </Fragment>
   )}
   {metrikaId && (
-    <script is:inline set:html={`(function(m,e,t,r,i,k,a){m[i]=m[i]||function(){(m[i].a=m[i].a||[]).push(arguments)};m[i].l=1*new Date();for(var j=0;j<e.scripts.length;j++){if(e.scripts[j].src===r){return;}}k=e.createElement(t),a=e.getElementsByTagName(t)[0],k.async=1,k.src=r,a.parentNode.insertBefore(k,a)})(window,document,'script','https://mc.yandex.ru/metrika/tag.js','ym');ym(${metrikaId},'init',{ssr:true,webvisor:true,clickmap:true,accurateTrackBounce:true,trackLinks:true});`} />
+    <script is:inline set:html={`(function(m,e,t,r,i,k,a){m[i]=m[i]||function(){(m[i].a=m[i].a||[]).push(arguments)};m[i].l=1*new Date();for(var j=0;j<e.scripts.length;j++){if(e.scripts[j].src===r){return;}}k=e.createElement(t),a=e.getElementsByTagName(t)[0],k.async=1,k.src=r,a.parentNode.insertBefore(k,a)})(window,document,'script','https://mc.yandex.ru/metrika/tag.js','ym');ym(${metrikaId},'init',{webvisor:true,clickmap:true,accurateTrackBounce:true,trackLinks:true});`} />
   )}
 </head>
 <body>

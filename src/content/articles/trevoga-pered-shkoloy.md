@@ -4,7 +4,7 @@ seoTitle: "Ребёнок боится идти в школу: как снизи
 description: "За пару недель до школы ребёнок стал плаксивым и «заболел животом»? Это тревога, а не капризы. Рассказываю, что помогло нам настроиться на 1 сентября без слёз и давления."
 pubDate: 2026-08-11
 updatedDate: 2026-08-24
-cover: "/images/trevoga-pered-shkoloy/cover.webp?v=2"
+cover: "/images/trevoga-pered-shkoloy/cover-v2.webp"
 tags: ["школа", "1 сентября", "тревога", "эмоции"]
 section: "school"
 ---
