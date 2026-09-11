@@ -3,8 +3,8 @@ title: "Ребёнок не хочет читать: что делать, есл
 seoTitle: "Ребёнок не хочет читать: как привить любовь к чтению без давления"
 description: "Ребёнок отказывается читать и тянет время? Разбираю, почему заставлять бесполезно, и что реально возвращает интерес к книгам у детей 7-10 лет."
 pubDate: 2026-09-09
-updatedDate: 2026-09-09
-cover: "/images/rebenok-ne-hochet-chitat/cover.webp"
+updatedDate: 2026-09-11
+cover: "/images/rebenok-ne-hochet-chitat/cover.webp?v=2"
 tags: ["ребёнок не хочет читать", "чтение", "школа", "мотивация"]
 section: "school"
 ---
