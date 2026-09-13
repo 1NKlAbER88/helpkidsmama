@@ -4,7 +4,7 @@ seoTitle: "Застенчивый ребёнок: как помочь стать
 description: "Сын хотел играть с детьми, но не подходил. Год маленьких шагов, и он знакомится сам. Что говорить вместо «не бойся» и каких ошибок избежать."
 pubDate: 2026-08-11
 updatedDate: 2026-08-23
-cover: "/images/zastenchivyy-rebenok-uverennost/cover.webp"
+cover: "/images/zastenchivyy-rebenok-uverennost/cover-v2.webp"
 tags: ["застенчивость", "уверенность", "общение", "социальные навыки"]
 section: "emotions"
 ---

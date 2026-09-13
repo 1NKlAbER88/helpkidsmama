@@ -4,7 +4,7 @@ seoTitle: "Ребёнок не хочет делать домашку: что д
 description: "Каждый вечер - бой из-за уроков? Я стояла над сыном по два часа, пока не поняла, что делаю только хуже. Рассказываю, что помогло вернуть вечера - без криков и слёз."
 pubDate: 2026-08-10
 updatedDate: 2026-08-23
-cover: "/images/rebenok-ne-delaet-domashku/cover.webp"
+cover: "/images/rebenok-ne-delaet-domashku/cover-v2.webp"
 tags: ["учёба", "домашние задания", "мотивация", "школа"]
 section: "school"
 ---

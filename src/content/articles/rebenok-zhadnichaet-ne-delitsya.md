@@ -3,7 +3,7 @@ title: "«Это моё!»: почему ребёнок не делится, и 
 seoTitle: "Ребёнок жадничает и не делится: что делать родителям"
 description: "Ребёнок жадничает и не делится на площадке? Разбираю, почему требование делиться даёт обратный эффект и что помогло нам вместо него."
 pubDate: 2026-08-28
-cover: "/images/rebenok-zhadnichaet-ne-delitsya/cover.webp"
+cover: "/images/rebenok-zhadnichaet-ne-delitsya/cover-v2.webp"
 tags: ["ребёнок не делится", "ребёнок жадничает", "детская жадность", "воспитание без криков"]
 section: "relations"
 ---
