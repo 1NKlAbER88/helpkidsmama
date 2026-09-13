@@ -4,7 +4,7 @@ seoTitle: "Ребёнок не хочет чистить зубы: что дел
 description: "Ребёнок вырывается, закрывает рот и плачет при виде щётки? Разбираю причины отказа и приёмы, которые работают без силы, по возрастам от двух до восьми лет."
 pubDate: 2026-09-20
 updatedDate: 2026-09-20
-cover: "/images/rebenok-ne-hochet-chistit-zuby/cover.webp"
+cover: "/images/rebenok-ne-hochet-chistit-zuby/cover-v2.webp"
 tags: ["ребёнок не хочет чистить зубы", "гигиена", "полезные привычки", "поведение"]
 section: "behaviour"
 ---

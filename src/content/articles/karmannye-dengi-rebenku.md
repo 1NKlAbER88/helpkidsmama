@@ -4,7 +4,7 @@ seoTitle: "Карманные деньги детям: со скольки ле�
 description: "Когда начинать давать карманные деньги, сколько и как часто, платить ли за оценки и помощь по дому. Разбираю с суммами по возрастам и типичными ошибками родителей."
 pubDate: 2026-09-13
 updatedDate: 2026-09-13
-cover: "/images/karmannye-dengi-rebenku/cover.webp"
+cover: "/images/karmannye-dengi-rebenku/cover-v2.webp"
 tags: ["карманные деньги", "финансовая грамотность", "самостоятельность", "воспитание"]
 section: "behaviour"
 ---

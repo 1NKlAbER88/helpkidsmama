@@ -4,7 +4,7 @@ seoTitle: "Ребёнок боится мыть голову: как купат�
 description: "Ребёнок кричит при мытье головы и отказывается лезть в ванну? Разбираю, что именно его пугает, и даю приёмы, которые снимают крик за пару недель без силы и уговоров."
 pubDate: 2026-09-14
 updatedDate: 2026-09-14
-cover: "/images/rebenok-ne-hochet-myt-golovu/cover.webp"
+cover: "/images/rebenok-ne-hochet-myt-golovu/cover-v2.webp"
 tags: ["мытьё головы", "купание", "страхи", "режим дня"]
 section: "behaviour"
 ---

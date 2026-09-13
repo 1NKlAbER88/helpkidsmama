@@ -4,7 +4,7 @@ seoTitle: "Ребёнок всё забывает и теряет вещи: чт
 description: "Ребёнок забывает сменку, теряет шапки и не помнит, что задали? Разбираю, почему напоминания не работают, и какие внешние опоры это чинят без криков."
 pubDate: 2026-09-24
 updatedDate: 2026-09-24
-cover: "/images/rebenok-vse-zabyvaet-i-teryaet-veshchi/cover.webp"
+cover: "/images/rebenok-vse-zabyvaet-i-teryaet-veshchi/cover-v2.webp"
 tags: ["ребёнок забывает", "теряет вещи", "самостоятельность", "школа"]
 section: "school"
 ---

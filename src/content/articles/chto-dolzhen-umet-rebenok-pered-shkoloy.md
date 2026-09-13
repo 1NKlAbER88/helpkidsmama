@@ -4,7 +4,7 @@ seoTitle: "Что должен уметь ребёнок перед школой
 description: "Читать по слогам, считать до десяти, сидеть двадцать минут? Разбираю, что действительно спрашивают в первом классе и что можно спокойно не успеть."
 pubDate: 2026-09-18
 updatedDate: 2026-09-18
-cover: "/images/chto-dolzhen-umet-rebenok-pered-shkoloy/cover.webp"
+cover: "/images/chto-dolzhen-umet-rebenok-pered-shkoloy/cover-v2.webp"
 tags: ["подготовка к школе", "первый класс", "что должен уметь", "школа"]
 section: "school"
 ---

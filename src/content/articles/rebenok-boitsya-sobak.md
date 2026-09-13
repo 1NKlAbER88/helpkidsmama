@@ -4,7 +4,7 @@ seoTitle: "Ребёнок боится собак: что делать, как �
 description: "Ребёнок кричит и просится на руки при виде любой собаки? Разбираю, почему нельзя заставлять погладить, и даю пошаговую схему, которая снимает страх за несколько недель."
 pubDate: 2026-09-12
 updatedDate: 2026-09-12
-cover: "/images/rebenok-boitsya-sobak/cover.webp"
+cover: "/images/rebenok-boitsya-sobak/cover-v2.webp"
 tags: ["ребёнок боится собак", "страхи", "эмоции", "тревога"]
 section: "emotions"
 ---

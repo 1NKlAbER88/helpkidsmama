@@ -4,7 +4,7 @@ seoTitle: "Ребёнок не слушается с первого раза: ч
 description: "Приходится повторять просьбу по пять раз и срываться на крик? Разбираю, почему ребёнок не реагирует сразу, и что изменить в самой просьбе, чтобы он услышал."
 pubDate: 2026-09-22
 updatedDate: 2026-09-22
-cover: "/images/rebenok-ne-slushaetsya-s-pervogo-raza/cover.webp"
+cover: "/images/rebenok-ne-slushaetsya-s-pervogo-raza/cover-v2.webp"
 tags: ["ребёнок не слушается", "границы", "как просить ребёнка", "поведение"]
 section: "behaviour"
 ---

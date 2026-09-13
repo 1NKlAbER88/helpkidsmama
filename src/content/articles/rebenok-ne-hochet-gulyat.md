@@ -4,7 +4,7 @@ seoTitle: "Ребёнок не хочет гулять: что делать, к�
 description: "Ребёнок наотрез отказывается выходить на улицу и требует остаться дома с планшетом? Разбираю настоящие причины отказа и приёмы, которые работают без скандала."
 pubDate: 2026-09-16
 updatedDate: 2026-09-16
-cover: "/images/rebenok-ne-hochet-gulyat/cover.webp"
+cover: "/images/rebenok-ne-hochet-gulyat/cover-v2.webp"
 tags: ["ребёнок не хочет гулять", "прогулка", "режим дня", "поведение"]
 section: "behaviour"
 ---

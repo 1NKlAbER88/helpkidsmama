@@ -4,7 +4,7 @@ seoTitle: "Ребёнок требует внимания: что делать, 
 description: "Ребёнок начинает ныть и лезть на руки, стоит вам сесть за работу или взять телефон? Разбираю, почему это происходит именно тогда, и даю приёмы, которые работают."
 pubDate: 2026-09-15
 updatedDate: 2026-09-15
-cover: "/images/rebenok-trebuet-vnimaniya/cover.webp"
+cover: "/images/rebenok-trebuet-vnimaniya/cover-v2.webp"
 tags: ["ребёнок требует внимания", "мама занята", "самостоятельная игра", "отношения"]
 section: "relations"
 ---

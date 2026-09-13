@@ -4,7 +4,7 @@ seoTitle: "Ребёнок не хочет заниматься дома: что 
 description: "Ребёнок отказывается садиться за задания и бросает лист через минуту? Разбираю настоящие причины и приёмы, которые возвращают интерес без давления."
 pubDate: 2026-09-21
 updatedDate: 2026-09-21
-cover: "/images/rebenok-ne-hochet-zanimatsya/cover.webp"
+cover: "/images/rebenok-ne-hochet-zanimatsya/cover-v2.webp"
 tags: ["ребёнок не хочет заниматься", "подготовка к школе", "занятия дома", "мотивация"]
 section: "school"
 ---

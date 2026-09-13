@@ -4,7 +4,7 @@ seoTitle: "Ребёнок не хочет спать: что делать с у�
 description: "Ребёнок встаёт по десять раз, просит воды и требует ещё одну сказку? Разбираю, почему укладывание растягивается, и что делать вместо уговоров и криков."
 pubDate: 2026-09-17
 updatedDate: 2026-09-17
-cover: "/images/rebenok-ne-hochet-spat/cover.webp"
+cover: "/images/rebenok-ne-hochet-spat/cover-v2.webp"
 tags: ["ребёнок не хочет спать", "укладывание", "режим дня", "поведение"]
 section: "behaviour"
 ---

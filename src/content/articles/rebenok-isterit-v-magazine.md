@@ -4,7 +4,7 @@ seoTitle: "Истерика в магазине: что делать, если �
 description: "Ребёнок падает на пол в магазине и требует купить? Разбираю, что делать прямо в зале, как реагировать на взгляды и что настроить до похода."
 pubDate: 2026-09-19
 updatedDate: 2026-09-19
-cover: "/images/rebenok-isterit-v-magazine/cover.webp"
+cover: "/images/rebenok-isterit-v-magazine/cover-v2.webp"
 tags: ["истерика в магазине", "истерики", "границы", "поведение"]
 section: "behaviour"
 ---

@@ -4,7 +4,7 @@ seoTitle: "Ребёнок плачет по любому поводу: что д
 description: "Ребёнок плачет из-за сломанного печенья и не того цвета чашки? Разбираю, почему слёз так много, что говорить вместо «не плачь» и когда это повод к специалисту."
 pubDate: 2026-09-23
 updatedDate: 2026-09-23
-cover: "/images/rebenok-plachet-po-lyubomu-povodu/cover.webp"
+cover: "/images/rebenok-plachet-po-lyubomu-povodu/cover-v2.webp"
 tags: ["ребёнок плачет", "эмоции", "чувствительный ребёнок", "истерики"]
 section: "emotions"
 ---
